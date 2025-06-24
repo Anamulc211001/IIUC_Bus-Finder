@@ -5,7 +5,7 @@ const Header: React.FC = () => {
   return (
 <header
   className="relative bg-cover bg-center bg-no-repeat text-white overflow-hidden h-[700px]"
-  style={{ backgroundImage: "url('/src/components/bg-iiuc1.png')" }} // 🔁 Change this to your actual image path
+  style={{ backgroundImage: "url('/bg-iiuc1.png')" }} // 🔁 Change this to your actual image path
 >
   {/* Optional: Overlay for readability */}
 <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/30 to-transparent z-0"></div>
@@ -24,7 +24,7 @@ const Header: React.FC = () => {
     <div className="relative bg-white/10 backdrop-blur-sm rounded-full p-4 border border-white/20">
       {/* IIUC Logo Only */}
       <img 
-        src="/src/components/iiuc.png" 
+        src="/iiuc.png" 
         alt="iiuc"
         className="h-10 w-10 object-contain z-10"
       />
