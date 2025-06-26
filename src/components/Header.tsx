@@ -5,7 +5,7 @@ const Header: React.FC = () => {
   return (
 <header
   className="relative bg-cover bg-center bg-no-repeat text-white overflow-hidden h-[700px]"
-  style={{ backgroundImage: "url('/bg-iiuc1.png')" }} // 🔁 Change this to your actual image path
+  style={{ backgroundImage: "url('/bg-iiuc3.png')" }} // 🔁 Change this to your actual image path
 >
   {/* Optional: Overlay for readability */}
 <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/30 to-transparent z-0"></div>
@@ -17,6 +17,13 @@ const Header: React.FC = () => {
 
   <div className="relative container mx-auto px-6 py-12 z-10">
     <div className="text-center max-w-4xl mx-auto">
+
+          {/* Animated Bus Icon */}
+      <div className="absolute top-20 right-10 opacity-10">
+        <div className="animate-pulse">
+          <Bus className="h-32 w-32 text-white transform rotate-12" />
+        </div>
+      </div>  
       {/* Logo Section */}
 <div className="flex items-center justify-center space-x-4 mb-6">
   <div className="relative">
@@ -67,27 +74,23 @@ const Header: React.FC = () => {
 </div>
 
 
-
-
-
-
           {/* Quick Stats */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12">
-            <div className="bg-white/30 backdrop-blur-sm rounded-2xl p-6 border border-white/10">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-20">
+            <div className="bg-black/30 backdrop-blur-sm rounded-2xl p-6 border border-white/10">
               <div className="flex items-center justify-center space-x-3 mb-2">
                 <Clock className="h-6 w-6 text-blue-300" />
                 <span className="text-2xl font-bold text-white">50+</span>
               </div>
               <p className="text-blue-200 text-sm">Daily Schedules</p>
             </div>
-            <div className="bg-white/30 backdrop-blur-sm rounded-2xl p-6 border border-white/10">
+            <div className="bg-black/30 backdrop-blur-sm rounded-2xl p-6 border border-white/10">
               <div className="flex items-center justify-center space-x-3 mb-2">
                 <Bus className="h-6 w-6 text-emerald-300" />
                 <span className="text-2xl font-bold text-white">15+</span>
               </div>
               <p className="text-blue-200 text-sm">Routes Available</p>
             </div>
-            <div className="bg-white/30 backdrop-blur-sm rounded-2xl p-6 border border-white/10">
+            <div className="bg-black/30 backdrop-blur-sm rounded-2xl p-6 border border-white/10">
               <div className="flex items-center justify-center space-x-3 mb-2">
                 <GraduationCap className="h-6 w-6 text-purple-300" />
                 <span className="text-2xl font-bold text-white">24/7</span>
