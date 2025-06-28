@@ -4,6 +4,7 @@ import Header from './components/Header';
 import SearchFilters from './components/SearchFilters';
 import ResultsSection from './components/ResultsSection';
 import Footer from './components/Footer';
+import ScrollToTop from './components/ScrollToTop';
 import { busSchedules } from './data/busSchedules';
 import { useSearch } from './hooks/useSearch';
 
@@ -65,6 +66,9 @@ function App() {
       <div id="routes">
         <Footer />
       </div>
+
+      {/* Floating Back to Top Button */}
+      <ScrollToTop />
     </div>
   );
 }
