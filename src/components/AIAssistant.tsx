@@ -235,8 +235,8 @@ const AIAssistant: React.FC<AIAssistantProps> = ({ schedules }) => {
 
   return (
     <>
-      {/* Chat Widget Button */}
-      <div className="fixed bottom-6 left-6 z-50">
+      {/* Chat Widget Button - Now positioned on bottom-right */}
+      <div className="fixed bottom-6 right-6 z-50">
         <button
           onClick={() => setIsOpen(!isOpen)}
           className={`group relative bg-gradient-to-r from-blue-500 via-purple-500 to-indigo-600 hover:from-blue-600 hover:via-purple-600 hover:to-indigo-700 text-white p-4 rounded-full shadow-2xl hover:shadow-blue-500/25 transition-all duration-300 border-2 border-white/20 backdrop-blur-sm ${
@@ -263,18 +263,18 @@ const AIAssistant: React.FC<AIAssistantProps> = ({ schedules }) => {
           )}
 
           {/* Tooltip */}
-          <div className={`absolute bottom-full left-1/2 transform -translate-x-1/2 mb-3 px-3 py-2 bg-gray-900 text-white text-sm rounded-lg transition-all duration-200 whitespace-nowrap ${
+          <div className={`absolute bottom-full right-1/2 transform translate-x-1/2 mb-3 px-3 py-2 bg-gray-900 text-white text-sm rounded-lg transition-all duration-200 whitespace-nowrap ${
             isOpen ? 'opacity-0' : 'opacity-0 group-hover:opacity-100'
           }`}>
             🤖 AI Bus Assistant
-            <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-gray-900"></div>
+            <div className="absolute top-full right-1/2 transform translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-gray-900"></div>
           </div>
         </button>
       </div>
 
-      {/* Chat Window */}
+      {/* Chat Window - Now positioned from bottom-right */}
       {isOpen && (
-        <div className="fixed bottom-24 left-6 w-80 sm:w-96 h-96 bg-white rounded-2xl shadow-2xl border border-gray-200 z-50 flex flex-col overflow-hidden animate-fade-slide-up">
+        <div className="fixed bottom-24 right-6 w-80 sm:w-96 h-96 bg-white rounded-2xl shadow-2xl border border-gray-200 z-50 flex flex-col overflow-hidden animate-fade-slide-up">
           
           {/* Header */}
           <div className="bg-gradient-to-r from-blue-500 via-purple-500 to-indigo-600 text-white p-4 flex items-center justify-between">
