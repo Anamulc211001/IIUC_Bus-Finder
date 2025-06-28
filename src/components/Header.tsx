@@ -69,28 +69,52 @@ const Header: React.FC = () => {
   </div>
 </div>
 
-          {/* Quick Stats - Responsive Grid */}
+          {/* Enhanced Quick Stats - Responsive Grid with Premium Effects */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 lg:gap-8 mt-12 sm:mt-16 lg:mt-20 px-4">
-            <div className="bg-black/30 backdrop-blur-sm rounded-2xl p-4 sm:p-6 border border-white/10 animate-fade-slide-up" style={{ animationDelay: '0.9s' }}>
+            
+            {/* Daily Schedules Box */}
+            <div className="group bg-gradient-to-br from-blue-900/40 to-indigo-900/40 backdrop-blur-sm rounded-2xl p-4 sm:p-6 border border-white/10 animate-fade-slide-up hover:shadow-2xl hover:scale-105 transition-all duration-300 hover:border-blue-400/30 cursor-pointer" style={{ animationDelay: '0.9s' }}>
               <div className="flex items-center justify-center space-x-2 sm:space-x-3 mb-2">
-                <Clock className="h-5 w-5 sm:h-6 sm:w-6 text-blue-300" />
-                <span className="text-xl sm:text-2xl font-bold text-white">50+</span>
+                <div className="relative">
+                  <div className="absolute inset-0 bg-blue-400 rounded-full blur-md opacity-30 group-hover:opacity-50 transition-opacity"></div>
+                  <Clock className="h-5 w-5 sm:h-6 sm:w-6 text-blue-300 animate-pulse-grow relative z-10 group-hover:scale-110 transition-transform" />
+                </div>
+                <span className="text-xl sm:text-2xl font-bold text-white group-hover:text-blue-200 transition-colors">50+</span>
               </div>
-              <p className="text-blue-200 text-xs sm:text-sm">Daily Schedules</p>
+              <p className="text-blue-200 text-xs sm:text-sm group-hover:text-white transition-colors">Daily Schedules</p>
+              
+              {/* Hover Effect Glow */}
+              <div className="absolute inset-0 bg-gradient-to-r from-blue-500/0 via-blue-500/5 to-blue-500/0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
             </div>
-            <div className="bg-black/30 backdrop-blur-sm rounded-2xl p-4 sm:p-6 border border-white/10 animate-fade-slide-up" style={{ animationDelay: '1.1s' }}>
+            
+            {/* Routes Available Box */}
+            <div className="group bg-gradient-to-br from-emerald-900/40 to-green-900/40 backdrop-blur-sm rounded-2xl p-4 sm:p-6 border border-white/10 animate-fade-slide-up hover:shadow-2xl hover:scale-105 transition-all duration-300 hover:border-emerald-400/30 cursor-pointer" style={{ animationDelay: '1.1s' }}>
               <div className="flex items-center justify-center space-x-2 sm:space-x-3 mb-2">
-                <Bus className="h-5 w-5 sm:h-6 sm:w-6 text-emerald-300" />
-                <span className="text-xl sm:text-2xl font-bold text-white">15+</span>
+                <div className="relative">
+                  <div className="absolute inset-0 bg-emerald-400 rounded-full blur-md opacity-30 group-hover:opacity-50 transition-opacity"></div>
+                  <Bus className="h-5 w-5 sm:h-6 sm:w-6 text-emerald-300 animate-pulse-grow relative z-10 group-hover:scale-110 transition-transform" />
+                </div>
+                <span className="text-xl sm:text-2xl font-bold text-white group-hover:text-emerald-200 transition-colors">15+</span>
               </div>
-              <p className="text-blue-200 text-xs sm:text-sm">Routes Available</p>
+              <p className="text-blue-200 text-xs sm:text-sm group-hover:text-white transition-colors">Routes Available</p>
+              
+              {/* Hover Effect Glow */}
+              <div className="absolute inset-0 bg-gradient-to-r from-emerald-500/0 via-emerald-500/5 to-emerald-500/0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
             </div>
-            <div className="bg-black/30 backdrop-blur-sm rounded-2xl p-4 sm:p-6 border border-white/10 animate-fade-slide-up sm:col-span-1" style={{ animationDelay: '1.3s' }}>
+            
+            {/* Service Support Box */}
+            <div className="group bg-gradient-to-br from-purple-900/40 to-violet-900/40 backdrop-blur-sm rounded-2xl p-4 sm:p-6 border border-white/10 animate-fade-slide-up hover:shadow-2xl hover:scale-105 transition-all duration-300 hover:border-purple-400/30 cursor-pointer sm:col-span-1" style={{ animationDelay: '1.3s' }}>
               <div className="flex items-center justify-center space-x-2 sm:space-x-3 mb-2">
-                <GraduationCap className="h-5 w-5 sm:h-6 sm:w-6 text-purple-300" />
-                <span className="text-xl sm:text-2xl font-bold text-white">24/7</span>
+                <div className="relative">
+                  <div className="absolute inset-0 bg-purple-400 rounded-full blur-md opacity-30 group-hover:opacity-50 transition-opacity"></div>
+                  <GraduationCap className="h-5 w-5 sm:h-6 sm:w-6 text-purple-300 animate-pulse-grow relative z-10 group-hover:scale-110 transition-transform" />
+                </div>
+                <span className="text-xl sm:text-2xl font-bold text-white group-hover:text-purple-200 transition-colors">24/7</span>
               </div>
-              <p className="text-blue-200 text-xs sm:text-sm">Service Support</p>
+              <p className="text-blue-200 text-xs sm:text-sm group-hover:text-white transition-colors">Service Support</p>
+              
+              {/* Hover Effect Glow */}
+              <div className="absolute inset-0 bg-gradient-to-r from-purple-500/0 via-purple-500/5 to-purple-500/0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
             </div>
           </div>
         </div>
