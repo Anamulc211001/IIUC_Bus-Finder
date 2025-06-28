@@ -57,10 +57,11 @@ const SearchFilters: React.FC<SearchFiltersProps> = ({
     routeFilter !== 'All'
   ].filter(Boolean).length;
 
-  // Quick search suggestions
+  // Quick search suggestions with Agrabad added
   const quickSearches = [
     { label: '7:00 AM', icon: Clock, color: 'blue' },
     { label: 'BOT', icon: MapPin, color: 'emerald' },
+    { label: 'Agrabad', icon: MapPin, color: 'teal' },
     { label: 'Chatteswari', icon: MapPin, color: 'purple' },
     { label: 'Friday', icon: Calendar, color: 'orange' },
     { label: 'Female', icon: Users, color: 'pink' },
@@ -182,6 +183,7 @@ const SearchFilters: React.FC<SearchFiltersProps> = ({
                     className={`group flex items-center space-x-2 px-4 py-2 rounded-2xl font-medium transition-all hover:scale-105 shadow-sm hover:shadow-md ${
                       item.color === 'blue' ? 'bg-blue-50 text-blue-700 hover:bg-blue-100 border border-blue-200' :
                       item.color === 'emerald' ? 'bg-emerald-50 text-emerald-700 hover:bg-emerald-100 border border-emerald-200' :
+                      item.color === 'teal' ? 'bg-teal-50 text-teal-700 hover:bg-teal-100 border border-teal-200' :
                       item.color === 'purple' ? 'bg-purple-50 text-purple-700 hover:bg-purple-100 border border-purple-200' :
                       item.color === 'orange' ? 'bg-orange-50 text-orange-700 hover:bg-orange-100 border border-orange-200' :
                       item.color === 'pink' ? 'bg-pink-50 text-pink-700 hover:bg-pink-100 border border-pink-200' :
