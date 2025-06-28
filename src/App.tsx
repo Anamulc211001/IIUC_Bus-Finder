@@ -5,6 +5,7 @@ import SearchFilters from './components/SearchFilters';
 import ResultsSection from './components/ResultsSection';
 import Footer from './components/Footer';
 import ScrollToTop from './components/ScrollToTop';
+import AIAssistant from './components/AIAssistant';
 import { busSchedules } from './data/busSchedules';
 import { useSearch } from './hooks/useSearch';
 
@@ -67,8 +68,9 @@ function App() {
         <Footer />
       </div>
 
-      {/* Floating Back to Top Button */}
+      {/* Floating Components */}
       <ScrollToTop />
+      <AIAssistant schedules={busSchedules} />
     </div>
   );
 }
