@@ -25,7 +25,7 @@ const AIAssistant: React.FC<AIAssistantProps> = ({ schedules }) => {
         "Show me morning buses to IIUC",
         "What are Friday schedules?",
         "Find buses from BOT",
-        "Who developed this app?"
+        "Who is Anamul Haque?"
       ]
     }
   ]);
@@ -48,229 +48,114 @@ const AIAssistant: React.FC<AIAssistantProps> = ({ schedules }) => {
     }
   }, [isOpen]);
 
-  // AI Response Logic
+  // AI Response Logic with EXACT answers
   const generateResponse = (userMessage: string): { text: string; suggestions?: string[] } => {
     const message = userMessage.toLowerCase();
     
-    // Developer Information Queries - COMPREHENSIVE COVERAGE
+    // WHO IS ANAMUL HAQUE - Exact answer
     if (
-      message.includes('developer') || 
-      message.includes('who made') || 
-      message.includes('who created') || 
-      message.includes('who built') || 
-      message.includes('who developed') ||
-      message.includes('creator') ||
-      message.includes('author') ||
-      message.includes('programmer') ||
-      message.includes('coder') ||
-      message.includes('anamul') ||
-      message.includes('md anamul') ||
-      message.includes('shakib') ||
-      message.includes('haque') ||
-      message.includes('contact developer') ||
-      message.includes('developer contact') ||
-      message.includes('developer info') ||
-      message.includes('developer details') ||
+      message.includes('who is anamul') ||
+      message.includes('anamul haque') ||
       message.includes('who is the developer') ||
-      message.includes('app developer') ||
-      message.includes('website developer') ||
-      message.includes('made by') ||
-      message.includes('built by') ||
-      message.includes('designed by')
+      message.includes('who developed') ||
+      message.includes('who made') ||
+      message.includes('who created') ||
+      message.includes('developer') ||
+      message.includes('creator')
     ) {
       return {
-        text: `👨‍💻 **Meet the Developer: Md Anamul Haque**
-
-🎓 **About:**
-• Full-stack developer and IIUC student
-• Passionate about creating solutions for the IIUC community
-• Specializes in modern web development and UI/UX design
-
-📱 **Contact Information:**
-• **Phone:** +880 1680-478706
-• **Email:** anamulshakib6450@gmail.com
-• **Location:** Chittagong, Bangladesh
-
-🌐 **Professional Links:**
-• **GitHub:** github.com/Anamulc211001
-• **LinkedIn:** linkedin.com/in/md-anamul-haque-shakib
-• **Behance:** behance.net/mdanamulhaque6
-
-💡 **About This Project:**
-This IIUC Bus Finder was built with love using React, TypeScript, and Tailwind CSS to help students and faculty find bus schedules easily. It features real-time search, AI assistance, and a modern responsive design.
-
-🚀 **Tech Stack:**
-• Frontend: React + TypeScript + Tailwind CSS
-• Icons: Lucide React
-• Build Tool: Vite
-• Deployment: Modern web standards
-
-Feel free to reach out for any suggestions, feedback, or collaboration opportunities!`,
+        text: "Anamul Haque is the developer of this website and he is a CS engineer & UI/UX designer.",
         suggestions: [
-          "Call developer: +880 1680-478706",
-          "Email developer",
-          "View GitHub profile",
-          "Connect on LinkedIn",
+          "Get his phone number",
+          "Get his email",
+          "View his LinkedIn",
+          "View his Behance",
           "Back to bus schedules"
         ]
       };
     }
 
-    // Phone/Mobile number queries
+    // PHONE NUMBER - Exact answer
     if (
-      message.includes('phone') && (message.includes('developer') || message.includes('anamul')) ||
-      message.includes('mobile') && (message.includes('developer') || message.includes('anamul')) ||
-      message.includes('number') && (message.includes('developer') || message.includes('anamul')) ||
-      message.includes('call developer') ||
-      message.includes('developer phone') ||
-      message.includes('developer mobile') ||
-      message.includes('developer number')
+      (message.includes('phone') || message.includes('number') || message.includes('mobile') || message.includes('call')) &&
+      (message.includes('anamul') || message.includes('developer') || message.includes('his'))
     ) {
       return {
-        text: `📞 **Developer Contact Number:**
-
-**Md Anamul Haque**
-📱 **Mobile:** +880 1680-478706
-
-**Best times to call:**
-• 9:00 AM - 6:00 PM (Bangladesh Time)
-• Available for project discussions, feedback, and collaboration
-
-**Alternative contact:**
-• **Email:** anamulshakib6450@gmail.com
-• **WhatsApp:** Same number (+880 1680-478706)
-
-Feel free to call for any questions about the IIUC Bus Finder app or for web development projects!`,
+        text: "+880 1680-478706",
         suggestions: [
-          "Call now: +880 1680-478706",
-          "Send WhatsApp message",
-          "Email instead",
-          "View other contact options",
-          "Back to bus info"
-        ]
-      };
-    }
-
-    // Email queries
-    if (
-      message.includes('email') && (message.includes('developer') || message.includes('anamul')) ||
-      message.includes('mail') && (message.includes('developer') || message.includes('anamul')) ||
-      message.includes('developer email') ||
-      message.includes('email developer')
-    ) {
-      return {
-        text: `📧 **Developer Email Contact:**
-
-**Md Anamul Haque**
-✉️ **Email:** anamulshakib6450@gmail.com
-
-**What you can email about:**
-• 🐛 Bug reports or issues with the app
-• 💡 Feature suggestions and improvements
-• 🤝 Collaboration opportunities
-• 💼 Web development projects
-• 📚 IIUC-related tech projects
-• 🎓 Student project guidance
-
-**Response time:** Usually within 24 hours
-
-**Email tips:**
-• Include "IIUC Bus App" in subject line
-• Be specific about your query
-• Attach screenshots for bug reports
-
-Professional and friendly communication is always welcome!`,
-        suggestions: [
-          "Open email app",
-          "Copy email address",
-          "Report a bug",
-          "Suggest a feature",
+          "Call now",
+          "Get his email",
+          "View LinkedIn",
+          "View Behance",
           "Back to schedules"
         ]
       };
     }
 
-    // Social media and portfolio queries
+    // EMAIL - Exact answer
     if (
-      message.includes('github') || 
-      message.includes('linkedin') || 
-      message.includes('behance') ||
-      message.includes('portfolio') ||
-      message.includes('social') ||
-      message.includes('profile') && message.includes('developer')
+      (message.includes('email') || message.includes('mail')) &&
+      (message.includes('anamul') || message.includes('developer') || message.includes('his'))
     ) {
       return {
-        text: `🌐 **Developer's Professional Profiles:**
-
-**Md Anamul Haque - Online Presence**
-
-🔗 **GitHub:** github.com/Anamulc211001
-• View source code and projects
-• Open-source contributions
-• Technical repositories
-
-💼 **LinkedIn:** linkedin.com/in/md-anamul-haque-shakib
-• Professional network and experience
-• Connect for career opportunities
-• Industry updates and insights
-
-🎨 **Behance:** behance.net/mdanamulhaque6
-• Creative design portfolio
-• UI/UX design projects
-• Visual design showcase
-
-**Why connect?**
-• See more projects and skills
-• Collaborate on future projects
-• Get updates on new developments
-• Professional networking
-
-All profiles are actively maintained and showcase different aspects of development and design expertise!`,
+        text: "anamulshakib6450@gmail.com",
         suggestions: [
-          "Visit GitHub",
-          "Connect on LinkedIn",
-          "View Behance portfolio",
-          "See all projects",
-          "Back to bus finder"
+          "Send email",
+          "Get his phone",
+          "View LinkedIn",
+          "View Behance",
+          "Back to schedules"
         ]
       };
     }
 
-    // Name-specific queries
+    // LINKEDIN - Exact answer
     if (
-      message.includes('name') && (message.includes('developer') || message.includes('creator')) ||
-      message.includes('what is') && message.includes('name') ||
-      message.includes('developer name')
+      message.includes('linkedin') &&
+      (message.includes('anamul') || message.includes('developer') || message.includes('his'))
     ) {
       return {
-        text: `👤 **Developer Name & Identity:**
-
-**Full Name:** Md Anamul Haque
-**Also known as:** Anamul Haque Shakib
-**Nickname:** Anamul
-
-**Background:**
-• 🎓 Student at International Islamic University Chittagong (IIUC)
-• 💻 Full-stack Web Developer
-• 🎨 UI/UX Designer
-• 🚀 Tech Enthusiast
-
-**Specializations:**
-• Modern web applications (React, TypeScript)
-• Responsive design and user experience
-• Database design and backend development
-• Mobile-first development approach
-
-**Mission:**
-Creating digital solutions that make life easier for the IIUC community and beyond!
-
-The IIUC Bus Finder is one of many projects aimed at solving real-world problems through technology.`,
+        text: "https://www.linkedin.com/in/md-anamul-haque-shakib/",
         suggestions: [
-          "Contact Md Anamul Haque",
-          "View his projects",
-          "Learn about his skills",
-          "Connect professionally",
-          "Back to bus schedules"
+          "Visit LinkedIn",
+          "Get his phone",
+          "Get his email",
+          "View Behance",
+          "Back to schedules"
+        ]
+      };
+    }
+
+    // BEHANCE - Exact answer
+    if (
+      message.includes('behance') &&
+      (message.includes('anamul') || message.includes('developer') || message.includes('his'))
+    ) {
+      return {
+        text: "https://www.behance.net/mdanamulhaque6",
+        suggestions: [
+          "Visit Behance",
+          "Get his phone",
+          "Get his email",
+          "View LinkedIn",
+          "Back to schedules"
+        ]
+      };
+    }
+
+    // GITHUB - Exact answer
+    if (
+      message.includes('github') &&
+      (message.includes('anamul') || message.includes('developer') || message.includes('his'))
+    ) {
+      return {
+        text: "https://github.com/Anamulc211001",
+        suggestions: [
+          "Visit GitHub",
+          "Get his phone",
+          "Get his email",
+          "View LinkedIn",
+          "Back to schedules"
         ]
       };
     }
@@ -279,7 +164,7 @@ The IIUC Bus Finder is one of many projects aimed at solving real-world problems
     if (message.includes('hello') || message.includes('hi') || message.includes('hey')) {
       return {
         text: "Hello! 👋 I'm here to help you with IIUC bus schedules and transport information. What would you like to know?",
-        suggestions: ["Show bus schedules", "Friday timings", "Route information", "Who made this app?"]
+        suggestions: ["Show bus schedules", "Friday timings", "Route information", "Who is Anamul Haque?"]
       };
     }
 
@@ -398,7 +283,7 @@ The IIUC Bus Finder is one of many projects aimed at solving real-world problems
     if (message.includes('help') || message.includes('assist') || message.includes('support')) {
       return {
         text: "🤝 I can help you with:\n• 🚌 Bus schedules and timings\n• 🗺️ Route information\n• 👥 Gender-specific buses\n• 📅 Friday special schedules\n• 📞 Contact information\n• 🎯 Specific location queries\n• 👨‍💻 Developer information",
-        suggestions: ["Find my bus", "Route planner", "Contact support", "Meet the developer"]
+        suggestions: ["Find my bus", "Route planner", "Contact support", "Who is Anamul Haque?"]
       };
     }
 
@@ -409,7 +294,7 @@ The IIUC Bus Finder is one of many projects aimed at solving real-world problems
         "Show all schedules",
         "Find buses from my area", 
         "Friday special timings",
-        "Who developed this app?"
+        "Who is Anamul Haque?"
       ]
     };
   };
@@ -634,7 +519,7 @@ The IIUC Bus Finder is one of many projects aimed at solving real-world problems
                       <Clock className="h-4 w-4" />
                     </button>
                     <button
-                      onClick={() => handleSuggestionClick("Who developed this app?")}
+                      onClick={() => handleSuggestionClick("Who is Anamul Haque?")}
                       className="p-1.5 text-gray-400 hover:text-purple-500 transition-colors"
                       title="Developer info"
                       type="button"
