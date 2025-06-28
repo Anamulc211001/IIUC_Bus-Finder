@@ -1,5 +1,5 @@
-import React from 'react';
-import { Clock, MapPin, Route, ArrowRight, Users, Bus, Calendar, Star } from 'lucide-react';
+import React, { useState } from 'react';
+import { Clock, MapPin, Route, ArrowRight, Users, Bus, Calendar, Star, Bookmark, Share2, Navigation, Zap, Leaf, Heart, ChevronDown, ChevronUp } from 'lucide-react';
 import { BusSchedule } from '../types/BusSchedule';
 
 interface BusCardProps {
@@ -7,6 +7,9 @@ interface BusCardProps {
 }
 
 const BusCard: React.FC<BusCardProps> = ({ schedule }) => {
+  const [isExpanded, setIsExpanded] = useState(false);
+  const [isFavorited, setIsFavorited] = useState(false);
+
   const getDirectionColor = (direction: string) => {
     switch (direction) {
       case 'CityToIIUC':
@@ -62,7 +65,7 @@ const BusCard: React.FC<BusCardProps> = ({ schedule }) => {
   };
 
   const formatRoute = (route: string) => {
-    if (route.length > 60) {
+    if (route.length > 60 && !isExpanded) {
       return route.substring(0, 60) + '...';
     }
     return route;
@@ -83,114 +86,176 @@ const BusCard: React.FC<BusCardProps> = ({ schedule }) => {
     }
   };
 
+  // Calculate estimated travel time (mock calculation)
+  const getEstimatedTime = () => {
+    const routeLength = schedule.route.split('–').length;
+    return `${Math.max(15, routeLength * 8)} min`;
+  };
+
+  // Check if it's an eco-friendly option
+  const isEcoFriendly = () => {
+    return schedule.busType?.includes('AC') || schedule.scheduleType === 'Regular';
+  };
+
   return (
-    <div className="group bg-white rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-100 overflow-hidden transform hover:-translate-y-2">
-      {/* Card Header */}
+    <div className="group bg-white rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-100 overflow-hidden transform hover:-translate-y-1 relative">
+      
+      {/* Eco-Friendly Badge */}
+      {isEcoFriendly() && (
+        <div className="absolute top-4 right-4 z-10">
+          <div className="bg-green-500 text-white px-3 py-1 rounded-full text-xs font-bold flex items-center space-x-1 shadow-lg">
+            <Leaf className="h-3 w-3" />
+            <span>Eco</span>
+          </div>
+        </div>
+      )}
+
+      {/* Quick Action Buttons */}
+      <div className="absolute top-4 left-4 z-10 flex space-x-2">
+        <button
+          onClick={() => setIsFavorited(!isFavorited)}
+          className={`p-2 rounded-full transition-all shadow-lg ${
+            isFavorited 
+              ? 'bg-red-500 text-white' 
+              : 'bg-white/90 text-gray-600 hover:bg-red-50 hover:text-red-500'
+          }`}
+        >
+          <Heart className={`h-4 w-4 ${isFavorited ? 'fill-current' : ''}`} />
+        </button>
+        
+        <button className="p-2 rounded-full bg-white/90 text-gray-600 hover:bg-blue-50 hover:text-blue-500 transition-all shadow-lg">
+          <Share2 className="h-4 w-4" />
+        </button>
+      </div>
+
+      {/* Compact Header */}
       <div className="bg-gradient-to-r from-slate-50 to-gray-50 p-6 border-b border-gray-100">
-        <div className="flex items-center justify-between mb-4">
-          <div className="flex items-center space-x-3">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center space-x-4">
             <div className="bg-gradient-to-r from-blue-500 to-indigo-600 rounded-2xl p-3">
               <Clock className="h-6 w-6 text-white" />
             </div>
             <div>
-              <span className="text-3xl font-bold text-gray-900">{schedule.time}</span>
-              <div className="flex items-center space-x-2 mt-1">
-                <Star className="h-4 w-4 text-yellow-400 fill-current" />
-                <span className="text-sm text-gray-600">Live Schedule</span>
+              <span className="text-2xl font-bold text-gray-900">{schedule.time}</span>
+              <div className="flex items-center space-x-3 mt-1">
+                <div className="flex items-center space-x-1">
+                  <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                  <span className="text-xs text-gray-600 font-medium">Live</span>
+                </div>
+                <div className="flex items-center space-x-1 text-xs text-gray-500">
+                  <Navigation className="h-3 w-3" />
+                  <span>{getEstimatedTime()}</span>
+                </div>
               </div>
             </div>
           </div>
+          
           <div className="flex flex-col space-y-2">
-            <span className={`px-4 py-2 rounded-full text-xs font-bold ${getScheduleTypeColor(schedule.scheduleType)} shadow-lg`}>
+            <span className={`px-3 py-1 rounded-full text-xs font-bold ${getScheduleTypeColor(schedule.scheduleType)} shadow-sm`}>
               {schedule.scheduleType === 'Friday' ? '🕌 Friday' : '📅 Regular'}
             </span>
-            <span className={`px-4 py-2 rounded-full text-xs font-bold ${getDirectionColor(schedule.direction)} shadow-lg`}>
+            <span className={`px-3 py-1 rounded-full text-xs font-bold ${getDirectionColor(schedule.direction)} shadow-sm`}>
               {formatDirection(schedule.direction)}
             </span>
           </div>
         </div>
       </div>
 
-      {/* Card Body */}
-      <div className="p-6 space-y-6">
-        {/* Route Information */}
-        <div className="space-y-4">
-          <div className="flex items-start space-x-3">
-            <div className="bg-green-100 rounded-xl p-2 mt-1">
-              <MapPin className="h-5 w-5 text-green-600" />
+      {/* Compact Route Display */}
+      <div className="p-6 space-y-4">
+        {/* Route Summary */}
+        <div className="flex items-center justify-between">
+          <div className="flex items-center space-x-3 flex-1">
+            <div className="bg-green-100 rounded-xl p-2">
+              <MapPin className="h-4 w-4 text-green-600" />
             </div>
-            <div className="flex-1">
-              <span className="text-sm font-semibold text-gray-600 uppercase tracking-wide">Starting Point</span>
-              <p className="text-xl font-bold text-gray-900 mt-1">{schedule.startingPoint}</p>
-            </div>
-          </div>
-          
-          <div className="flex items-center justify-center">
-            <div className="flex-1 h-px bg-gradient-to-r from-transparent via-gray-300 to-transparent"></div>
-            <ArrowRight className="h-6 w-6 text-gray-400 mx-4" />
-            <div className="flex-1 h-px bg-gradient-to-r from-transparent via-gray-300 to-transparent"></div>
-          </div>
-          
-          <div className="flex items-start space-x-3">
-            <div className="bg-blue-100 rounded-xl p-2 mt-1">
-              <Route className="h-5 w-5 text-blue-600" />
-            </div>
-            <div className="flex-1">
-              <span className="text-sm font-semibold text-gray-600 uppercase tracking-wide">Route Details</span>
-              <p className="text-gray-700 leading-relaxed mt-1">{formatRoute(schedule.route)}</p>
+            <div className="flex-1 min-w-0">
+              <p className="font-bold text-gray-900 truncate">{schedule.startingPoint}</p>
+              <p className="text-sm text-gray-500">Starting Point</p>
             </div>
           </div>
           
-          <div className="bg-gradient-to-r from-indigo-50 to-blue-50 rounded-2xl p-4 border border-indigo-100">
-            <div className="flex items-center space-x-2 mb-2">
-              <div className="bg-indigo-500 rounded-lg p-1">
-                <MapPin className="h-4 w-4 text-white" />
-              </div>
-              <span className="text-sm font-semibold text-indigo-700">Destination</span>
+          <ArrowRight className="h-5 w-5 text-gray-400 mx-4 flex-shrink-0" />
+          
+          <div className="flex items-center space-x-3 flex-1">
+            <div className="bg-blue-100 rounded-xl p-2">
+              <MapPin className="h-4 w-4 text-blue-600" />
             </div>
-            <p className="font-bold text-indigo-900 text-lg">{schedule.endPoint}</p>
+            <div className="flex-1 min-w-0">
+              <p className="font-bold text-gray-900 truncate">{schedule.endPoint}</p>
+              <p className="text-sm text-gray-500">Destination</p>
+            </div>
           </div>
         </div>
 
-        {/* Tags and Additional Info */}
-        <div className="space-y-4">
-          <div className="flex flex-wrap gap-3">
-            {schedule.gender && (
-              <span className={`px-4 py-2 rounded-full text-sm font-semibold ${getGenderColor(schedule.gender)} shadow-sm`}>
-                👤 {schedule.gender}
-              </span>
-            )}
-            {schedule.busType && (
-              <span className={`px-4 py-2 rounded-full text-sm font-semibold ${getBusTypeColor(schedule.busType)} shadow-sm`}>
-                🚌 {schedule.busType}
-              </span>
-            )}
-          </div>
-          
-          {(schedule.remarks || schedule.description) && (
-            <div className="bg-gradient-to-r from-amber-50 to-yellow-50 rounded-2xl p-4 border border-amber-200">
-              <div className="flex items-center space-x-2 mb-2">
-                <Users className="h-5 w-5 text-amber-600" />
-                <span className="text-sm font-semibold text-amber-700">Special Notes</span>
-              </div>
-              <span className={`inline-block px-4 py-2 rounded-full text-sm font-semibold ${getRemarksColor(schedule.remarks || schedule.description)} shadow-sm`}>
-                {schedule.remarks || schedule.description}
-              </span>
+        {/* Expandable Route Details */}
+        <div className="space-y-3">
+          <button
+            onClick={() => setIsExpanded(!isExpanded)}
+            className="w-full flex items-center justify-between p-3 bg-gray-50 rounded-2xl hover:bg-gray-100 transition-colors"
+          >
+            <div className="flex items-center space-x-2">
+              <Route className="h-4 w-4 text-gray-600" />
+              <span className="text-sm font-medium text-gray-700">Route Details</span>
             </div>
+            {isExpanded ? (
+              <ChevronUp className="h-4 w-4 text-gray-500" />
+            ) : (
+              <ChevronDown className="h-4 w-4 text-gray-500" />
+            )}
+          </button>
+          
+          {isExpanded && (
+            <div className="bg-gradient-to-r from-indigo-50 to-blue-50 rounded-2xl p-4 border border-indigo-100 animate-fade-slide-up">
+              <p className="text-gray-700 leading-relaxed">{formatRoute(schedule.route)}</p>
+            </div>
+          )}
+        </div>
+
+        {/* Compact Tags */}
+        <div className="flex flex-wrap gap-2">
+          {schedule.gender && (
+            <span className={`px-3 py-1 rounded-full text-xs font-semibold ${getGenderColor(schedule.gender)} shadow-sm`}>
+              👤 {schedule.gender}
+            </span>
+          )}
+          {schedule.busType && (
+            <span className={`px-3 py-1 rounded-full text-xs font-semibold ${getBusTypeColor(schedule.busType)} shadow-sm`}>
+              🚌 {schedule.busType}
+            </span>
+          )}
+          {(schedule.remarks || schedule.description) && (
+            <span className={`px-3 py-1 rounded-full text-xs font-semibold ${getRemarksColor(schedule.remarks || schedule.description)} shadow-sm`}>
+              {schedule.remarks || schedule.description}
+            </span>
           )}
         </div>
       </div>
 
-      {/* Card Footer */}
+      {/* Enhanced Footer */}
       <div className="bg-gradient-to-r from-gray-50 to-slate-50 px-6 py-4 border-t border-gray-100">
-        <div className="flex items-center justify-between text-sm text-gray-600">
-          <span className="flex items-center space-x-2">
-            <Bus className="h-4 w-4" />
-            <span>Live tracking available</span>
-          </span>
-          <span className="text-xs bg-green-100 text-green-700 px-3 py-1 rounded-full font-medium">
-            ✓ Active
-          </span>
+        <div className="flex items-center justify-between">
+          <div className="flex items-center space-x-4">
+            <div className="flex items-center space-x-2 text-sm text-gray-600">
+              <Bus className="h-4 w-4" />
+              <span>Live tracking</span>
+            </div>
+            {isEcoFriendly() && (
+              <div className="flex items-center space-x-2 text-sm text-green-600">
+                <Leaf className="h-4 w-4" />
+                <span>Eco-friendly</span>
+              </div>
+            )}
+          </div>
+          
+          <div className="flex items-center space-x-2">
+            <span className="text-xs bg-green-100 text-green-700 px-2 py-1 rounded-full font-medium">
+              ✓ Active
+            </span>
+            <button className="p-2 rounded-full bg-blue-50 text-blue-600 hover:bg-blue-100 transition-colors">
+              <Navigation className="h-4 w-4" />
+            </button>
+          </div>
         </div>
       </div>
     </div>
