@@ -165,13 +165,13 @@ const Navbar: React.FC = () => {
           </div>
         </div>
 
-        {/* Mobile Menu - Responsive */}
+        {/* Enhanced Mobile Menu - Professional Design */}
         {isMobileMenuOpen && (
-          <div className="xl:hidden absolute top-full left-0 right-0 bg-white/95 backdrop-blur-md border-b border-gray-200/50 shadow-lg">
+          <div className="xl:hidden absolute top-full left-0 right-0 bg-white/95 backdrop-blur-md border-b border-gray-200/50 shadow-lg rounded-b-2xl">
             <div className="px-4 sm:px-6 py-4 sm:py-6 space-y-3 sm:space-y-4">
               <button
                 onClick={() => scrollToSection('home')}
-                className="flex items-center space-x-3 w-full px-3 sm:px-4 py-2 sm:py-3 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded-xl transition-all"
+                className="flex items-center space-x-3 w-full px-4 sm:px-5 py-2.5 sm:py-3.5 text-gray-700 hover:bg-blue-50 hover:text-blue-700 hover:border-blue-200 rounded-xl transition-all border border-transparent"
               >
                 <Bus className="h-4 w-4 sm:h-5 sm:w-5" />
                 <span className="font-medium text-sm sm:text-base">Home</span>
@@ -179,7 +179,7 @@ const Navbar: React.FC = () => {
               
               <button
                 onClick={() => scrollToSection('search-filters')}
-                className="flex items-center space-x-3 w-full px-3 sm:px-4 py-2 sm:py-3 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded-xl transition-all"
+                className="flex items-center space-x-3 w-full px-4 sm:px-5 py-2.5 sm:py-3.5 text-gray-700 hover:bg-blue-50 hover:text-blue-700 hover:border-blue-200 rounded-xl transition-all border border-transparent"
               >
                 <Search className="h-4 w-4 sm:h-5 sm:w-5" />
                 <span className="font-medium text-sm sm:text-base">Search Schedules</span>
@@ -187,7 +187,7 @@ const Navbar: React.FC = () => {
               
               <button
                 onClick={() => scrollToSection('schedules')}
-                className="flex items-center space-x-3 w-full px-3 sm:px-4 py-2 sm:py-3 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded-xl transition-all"
+                className="flex items-center space-x-3 w-full px-4 sm:px-5 py-2.5 sm:py-3.5 text-gray-700 hover:bg-blue-50 hover:text-blue-700 hover:border-blue-200 rounded-xl transition-all border border-transparent"
               >
                 <Clock className="h-4 w-4 sm:h-5 sm:w-5" />
                 <span className="font-medium text-sm sm:text-base">All Schedules</span>
@@ -195,7 +195,7 @@ const Navbar: React.FC = () => {
               
               <button
                 onClick={() => scrollToSection('routes')}
-                className="flex items-center space-x-3 w-full px-3 sm:px-4 py-2 sm:py-3 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded-xl transition-all"
+                className="flex items-center space-x-3 w-full px-4 sm:px-5 py-2.5 sm:py-3.5 text-gray-700 hover:bg-blue-50 hover:text-blue-700 hover:border-blue-200 rounded-xl transition-all border border-transparent"
               >
                 <MapPin className="h-4 w-4 sm:h-5 sm:w-5" />
                 <span className="font-medium text-sm sm:text-base">Route Information</span>
@@ -204,7 +204,7 @@ const Navbar: React.FC = () => {
               <div className="pt-3 sm:pt-4 border-t border-gray-200">
                 <a
                   href="tel:+880-31-2510500"
-                  className="flex items-center justify-center space-x-2 w-full px-4 sm:px-6 py-2 sm:py-3 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-2xl font-semibold hover:from-blue-600 hover:to-indigo-700 transition-all shadow-lg"
+                  className="flex items-center justify-center space-x-2 w-full px-4 sm:px-6 py-2.5 sm:py-3.5 bg-blue-50 text-blue-600 rounded-2xl font-semibold hover:bg-blue-100 transition-all shadow-sm hover:shadow-md border border-blue-200"
                 >
                   <Phone className="h-4 w-4 sm:h-5 sm:w-5" />
                   <span className="text-sm sm:text-base">Contact Transport</span>
