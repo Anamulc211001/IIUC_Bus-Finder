@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { MessageCircle, X, Send, Bot, User, Sparkles, Clock, MapPin, Bus, Phone, Mail, ExternalLink, Zap, Star, Github, Linkedin, Palette } from 'lucide-react';
+import { MessageCircle, X, Send, Bot, User, Sparkles, Clock, MapPin, Bus, Phone, Mail, ExternalLink, Zap, Star, Github, Linkedin, Palette, Route, Calendar, Users } from 'lucide-react';
 
 interface Message {
   id: string;
@@ -18,13 +18,13 @@ const AIAssistant: React.FC<AIAssistantProps> = ({ schedules }) => {
   const [messages, setMessages] = useState<Message[]>([
     {
       id: '1',
-      text: "👋 Hi! I'm your IIUC Bus Assistant! I can help you find bus schedules, routes, and answer any transport-related questions. How can I assist you today?",
+      text: "👋 Hi! I'm your IIUC Smart Bus Assistant! I can help you find specific bus schedules, routes, timings, and answer any transport-related questions. Ask me anything about IIUC buses! 🚌✨",
       isBot: true,
       timestamp: new Date(),
       suggestions: [
-        "Show me morning buses to IIUC",
-        "What are Friday schedules?",
-        "Find buses from BOT",
+        "Show buses from BOT at 7:00 AM",
+        "Female buses to IIUC morning",
+        "Friday AC bus schedule",
         "Who is Anamul Haque?"
       ]
     }
@@ -48,7 +48,7 @@ const AIAssistant: React.FC<AIAssistantProps> = ({ schedules }) => {
     }
   }, [isOpen]);
 
-  // AI Response Logic with EXACT answers
+  // SMART AI Response Logic with EXACT answers and ROUTE INTELLIGENCE
   const generateResponse = (userMessage: string): { text: string; suggestions?: string[] } => {
     const message = userMessage.toLowerCase();
     
@@ -60,7 +60,7 @@ const AIAssistant: React.FC<AIAssistantProps> = ({ schedules }) => {
       message.includes('who developed') ||
       message.includes('who made') ||
       message.includes('who created') ||
-      message.includes('developer') ||
+      (message.includes('developer') && !message.includes('bus')) ||
       message.includes('creator')
     ) {
       return {
@@ -78,7 +78,7 @@ const AIAssistant: React.FC<AIAssistantProps> = ({ schedules }) => {
     // PHONE NUMBER - Exact answer
     if (
       (message.includes('phone') || message.includes('number') || message.includes('mobile') || message.includes('call')) &&
-      (message.includes('anamul') || message.includes('developer') || message.includes('his'))
+      (message.includes('anamul') || message.includes('developer') || message.includes('his') || message.includes('contact'))
     ) {
       return {
         text: "+880 1680-478706",
@@ -160,140 +160,327 @@ const AIAssistant: React.FC<AIAssistantProps> = ({ schedules }) => {
       };
     }
 
-    // Greeting responses
-    if (message.includes('hello') || message.includes('hi') || message.includes('hey')) {
+    // ===== SMART BUS SCHEDULE QUERIES =====
+
+    // SPECIFIC TIME QUERIES (e.g., "7:00 AM buses", "buses at 8:30")
+    const timeMatch = message.match(/(\d{1,2}):?(\d{0,2})\s*(am|pm)?/i);
+    if (timeMatch) {
+      let hour = parseInt(timeMatch[1]);
+      const minute = timeMatch[2] ? parseInt(timeMatch[2]) : 0;
+      const period = timeMatch[3]?.toLowerCase();
+      
+      // Convert to 24-hour format
+      if (period === 'pm' && hour !== 12) hour += 12;
+      if (period === 'am' && hour === 12) hour = 0;
+      
+      const searchTime = `${hour}:${minute.toString().padStart(2, '0')}`;
+      const displayTime = timeMatch[0];
+      
+      const timeBuses = schedules.filter(s => {
+        const busTime = s.time.toLowerCase();
+        return busTime.includes(displayTime.toLowerCase()) || 
+               busTime.includes(searchTime) ||
+               busTime.includes(`${hour}:${minute.toString().padStart(2, '0')}`);
+      });
+
+      if (timeBuses.length > 0) {
+        let response = `🕐 Found ${timeBuses.length} bus(es) at ${displayTime}:\n\n`;
+        timeBuses.forEach((bus, index) => {
+          response += `${index + 1}. ${bus.time} - ${bus.startingPoint} → ${bus.endPoint}\n`;
+          response += `   Route: ${bus.route}\n`;
+          if (bus.gender) response += `   Gender: ${bus.gender}\n`;
+          if (bus.scheduleType) response += `   Schedule: ${bus.scheduleType}\n`;
+          response += `\n`;
+        });
+        
+        return {
+          text: response,
+          suggestions: [
+            "More morning buses",
+            "Friday schedules",
+            "Return timings",
+            "Route details"
+          ]
+        };
+      }
+    }
+
+    // ROUTE-SPECIFIC QUERIES (e.g., "buses from BOT", "Agrabad to IIUC")
+    const routeKeywords = ['bot', 'agrabad', 'chatteswari', 'baroyarhat', 'hathazari', 'kotowali', 'cuet', 'gec', 'oxygen', 'navy hospital', 'lucky plaza', 'kaptai', 'shah amanath'];
+    const foundRoute = routeKeywords.find(keyword => message.includes(keyword));
+    
+    if (foundRoute || message.includes('from') || message.includes('to')) {
+      let routeBuses = [];
+      
+      if (foundRoute) {
+        routeBuses = schedules.filter(s => 
+          s.startingPoint.toLowerCase().includes(foundRoute) ||
+          s.route.toLowerCase().includes(foundRoute) ||
+          s.endPoint.toLowerCase().includes(foundRoute)
+        );
+      }
+
+      if (routeBuses.length > 0) {
+        let response = `🚌 Found ${routeBuses.length} bus(es) for ${foundRoute?.toUpperCase() || 'your route'}:\n\n`;
+        
+        // Group by schedule type
+        const regularBuses = routeBuses.filter(b => b.scheduleType === 'Regular');
+        const fridayBuses = routeBuses.filter(b => b.scheduleType === 'Friday');
+        
+        if (regularBuses.length > 0) {
+          response += `📅 REGULAR SCHEDULE (Sat-Wed):\n`;
+          regularBuses.forEach((bus, index) => {
+            response += `• ${bus.time} - ${bus.startingPoint} → ${bus.endPoint}`;
+            if (bus.gender) response += ` (${bus.gender})`;
+            response += `\n`;
+          });
+          response += `\n`;
+        }
+        
+        if (fridayBuses.length > 0) {
+          response += `🕌 FRIDAY SCHEDULE:\n`;
+          fridayBuses.forEach((bus, index) => {
+            response += `• ${bus.time} - ${bus.startingPoint} → ${bus.endPoint}`;
+            if (bus.busType) response += ` (${bus.busType})`;
+            response += `\n`;
+          });
+        }
+        
+        return {
+          text: response,
+          suggestions: [
+            "Route details",
+            "Travel time",
+            "Return buses",
+            "Alternative routes"
+          ]
+        };
+      }
+    }
+
+    // GENDER-SPECIFIC QUERIES
+    if (message.includes('female') || message.includes('women') || message.includes('girls') || message.includes('ladies')) {
+      const femaleBuses = schedules.filter(s => s.gender === 'Female');
+      let response = `👩 FEMALE BUSES (${femaleBuses.length} schedules):\n\n`;
+      
+      // Group by time
+      const morningFemale = femaleBuses.filter(s => {
+        const hour = parseInt(s.time.split(':')[0]);
+        return hour >= 6 && hour <= 9;
+      });
+      
+      response += `🌅 MORNING BUSES:\n`;
+      morningFemale.forEach(bus => {
+        response += `• ${bus.time} - ${bus.startingPoint} → ${bus.endPoint}\n`;
+      });
+      
+      const shuttleFemale = femaleBuses.filter(s => s.description?.includes('Shuttle'));
+      if (shuttleFemale.length > 0) {
+        response += `\n🔄 RETURN SHUTTLES:\n`;
+        shuttleFemale.forEach(bus => {
+          response += `• ${bus.time} - ${bus.startingPoint} → ${bus.endPoint}\n`;
+        });
+      }
+      
       return {
-        text: "Hello! 👋 I'm here to help you with IIUC bus schedules and transport information. What would you like to know?",
-        suggestions: ["Show bus schedules", "Friday timings", "Route information", "Who is Anamul Haque?"]
+        text: response,
+        suggestions: [
+          "Female morning buses",
+          "Female return shuttles",
+          "Safety features",
+          "Pickup points"
+        ]
       };
     }
 
-    // Time-based queries
+    if (message.includes('male') || message.includes('men') || message.includes('boys')) {
+      const maleBuses = schedules.filter(s => s.gender === 'Male');
+      let response = `👨 MALE BUSES (${maleBuses.length} schedules):\n\n`;
+      
+      const morningMale = maleBuses.filter(s => {
+        const hour = parseInt(s.time.split(':')[0]);
+        return hour >= 8 && hour <= 10;
+      });
+      
+      response += `🌅 MORNING BUSES:\n`;
+      morningMale.forEach(bus => {
+        response += `• ${bus.time} - ${bus.startingPoint} → ${bus.endPoint}\n`;
+      });
+      
+      return {
+        text: response,
+        suggestions: [
+          "Male morning buses",
+          "CUET connection",
+          "Male return shuttles",
+          "Timing details"
+        ]
+      };
+    }
+
+    // FRIDAY SCHEDULE QUERIES
+    if (message.includes('friday')) {
+      const fridayBuses = schedules.filter(s => s.scheduleType === 'Friday');
+      let response = `🕌 FRIDAY SPECIAL SCHEDULE (${fridayBuses.length} buses):\n\n`;
+      
+      // Group by direction
+      const toUniversity = fridayBuses.filter(s => s.direction === 'ToUniversity');
+      const fromUniversity = fridayBuses.filter(s => s.direction === 'FromUniversity');
+      
+      response += `➡️ TO UNIVERSITY:\n`;
+      toUniversity.forEach(bus => {
+        response += `• ${bus.time} - ${bus.startingPoint} → ${bus.endPoint}`;
+        if (bus.busType) response += ` (${bus.busType})`;
+        if (bus.remarks) response += ` - ${bus.remarks}`;
+        response += `\n`;
+      });
+      
+      response += `\n⬅️ FROM UNIVERSITY:\n`;
+      fromUniversity.forEach(bus => {
+        response += `• ${bus.time} - ${bus.startingPoint} → ${bus.endPoint}`;
+        if (bus.busType) response += ` (${bus.busType})`;
+        if (bus.remarks) response += ` - ${bus.remarks}`;
+        response += `\n`;
+      });
+      
+      return {
+        text: response,
+        suggestions: [
+          "AC bus timings",
+          "Teacher buses",
+          "Student buses",
+          "Return timings"
+        ]
+      };
+    }
+
+    // AC BUS QUERIES
+    if (message.includes('ac') || message.includes('air condition')) {
+      const acBuses = schedules.filter(s => s.busType?.includes('AC'));
+      let response = `❄️ AC BUSES (${acBuses.length} schedules - Friday only):\n\n`;
+      
+      acBuses.forEach(bus => {
+        response += `• ${bus.time} - ${bus.startingPoint} → ${bus.endPoint}\n`;
+        response += `  Route: ${bus.route}\n`;
+        if (bus.remarks) response += `  For: ${bus.remarks}\n`;
+        response += `\n`;
+      });
+      
+      return {
+        text: response,
+        suggestions: [
+          "AC bus routes",
+          "Teacher schedule",
+          "Booking info",
+          "Friday timings"
+        ]
+      };
+    }
+
+    // MORNING/EVENING QUERIES
     if (message.includes('morning') || message.includes('early')) {
       const morningBuses = schedules.filter(s => {
         const hour = parseInt(s.time.split(':')[0]);
         return hour >= 6 && hour <= 9;
       });
       
-      return {
-        text: `🌅 I found ${morningBuses.length} morning buses (6:00 AM - 9:00 AM). The earliest starts at 6:40 AM from Baroyarhat. Would you like specific details about any route?`,
-        suggestions: ["6:40 AM details", "Female buses", "Male buses", "All morning routes"]
-      };
-    }
-
-    // Friday schedule queries
-    if (message.includes('friday')) {
-      const fridayBuses = schedules.filter(s => s.scheduleType === 'Friday');
-      return {
-        text: `🕌 Friday has special schedules with ${fridayBuses.length} different timings. These include AC buses, IIUC buses, and special routes for teachers and students. The first bus starts at 7:30 AM.`,
-        suggestions: ["AC bus timings", "Teacher buses", "Student buses", "Return timings"]
-      };
-    }
-
-    // Location-based queries
-    if (message.includes('bot') || message.includes('bahaddarhat')) {
-      const botBuses = schedules.filter(s => 
-        s.startingPoint.toLowerCase().includes('bot') || 
-        s.route.toLowerCase().includes('bot')
-      );
+      let response = `🌅 MORNING BUSES (${morningBuses.length} schedules):\n\n`;
+      
+      // Group by gender
+      const femaleMorning = morningBuses.filter(s => s.gender === 'Female');
+      const maleMorning = morningBuses.filter(s => s.gender === 'Male');
+      
+      if (femaleMorning.length > 0) {
+        response += `👩 FEMALE BUSES:\n`;
+        femaleMorning.forEach(bus => {
+          response += `• ${bus.time} - ${bus.startingPoint}\n`;
+        });
+        response += `\n`;
+      }
+      
+      if (maleMorning.length > 0) {
+        response += `👨 MALE BUSES:\n`;
+        maleMorning.forEach(bus => {
+          response += `• ${bus.time} - ${bus.startingPoint}\n`;
+        });
+      }
       
       return {
-        text: `🚌 Found ${botBuses.length} buses from/via BOT (Bahaddarhat). Regular schedule: 7:00 AM and 9:00 AM. Friday schedule: 7:45 AM, 9:30 AM, and return trips.`,
-        suggestions: ["BOT morning times", "BOT Friday schedule", "BOT to IIUC route", "Return from IIUC"]
+        text: response,
+        suggestions: [
+          "6:40 AM details",
+          "Female morning buses",
+          "Male morning buses",
+          "Route information"
+        ]
       };
     }
 
-    if (message.includes('agrabad')) {
+    // RETURN/SHUTTLE QUERIES
+    if (message.includes('return') || message.includes('back') || message.includes('shuttle') || message.includes('iiuc to')) {
+      const returnBuses = schedules.filter(s => 
+        s.direction === 'IIUCToCity' || s.direction === 'FromUniversity'
+      );
+      
+      let response = `🔄 RETURN SHUTTLES (${returnBuses.length} services):\n\n`;
+      
+      returnBuses.forEach(bus => {
+        response += `• ${bus.time} - ${bus.startingPoint} → ${bus.endPoint}`;
+        if (bus.gender) response += ` (${bus.gender})`;
+        if (bus.description) response += ` - ${bus.description}`;
+        response += `\n`;
+      });
+      
       return {
-        text: "🏢 Agrabad buses: Regular schedule at 7:00 AM and 9:05 AM via Lucky Plaza. Friday: 7:45 AM and 8:00 AM with special AC bus for teachers. Route: Agrabad → Boropool → AK Khan → IIUC.",
-        suggestions: ["Agrabad timings", "Lucky Plaza route", "AC bus details", "Return schedule"]
+        text: response,
+        suggestions: [
+          "Shuttle timings",
+          "Return routes",
+          "Last shuttle",
+          "Weekend returns"
+        ]
       };
     }
 
-    if (message.includes('chatteswari')) {
+    // GREETING RESPONSES
+    if (message.includes('hello') || message.includes('hi') || message.includes('hey')) {
       return {
-        text: "🏘️ Chatteswari routes available! Regular: 7:00 AM and 9:05 AM. Friday: 7:45 AM. Route: Chatteswari Road → GEC → 2 no gate → Baizid Link Road → IIUC.",
-        suggestions: ["Chatteswari timings", "GEC connection", "Weekend schedule", "Return journey"]
+        text: "Hello! 👋 I'm your smart IIUC bus assistant. I can help you find specific bus schedules, routes, and timings. Try asking me:\n\n• 'Buses from BOT at 7:00 AM'\n• 'Female buses to IIUC'\n• 'Friday AC bus schedule'\n• 'Return shuttles from IIUC'\n\nWhat would you like to know?",
+        suggestions: ["Morning buses", "Friday schedules", "Route information", "Who is Anamul Haque?"]
       };
     }
 
-    // Gender-specific queries
-    if (message.includes('female') || message.includes('women') || message.includes('girls')) {
-      const femaleBuses = schedules.filter(s => s.gender === 'Female');
-      return {
-        text: `👩 Female-only buses: ${femaleBuses.length} schedules available. First bus at 6:40 AM from Baroyarhat. Multiple routes including BOT, Agrabad, Chatteswari, and more.`,
-        suggestions: ["Female morning buses", "Female routes", "Safety features", "Pickup points"]
-      };
-    }
-
-    if (message.includes('male') || message.includes('men') || message.includes('boys')) {
-      const maleBuses = schedules.filter(s => s.gender === 'Male');
-      return {
-        text: `👨 Male buses: ${maleBuses.length} schedules starting from 8:30 AM. Routes from CUET, Hathazari, BOT, Agrabad, and other major points.`,
-        suggestions: ["Male morning buses", "CUET connection", "Male routes", "Timing details"]
-      };
-    }
-
-    // AC Bus queries
-    if (message.includes('ac') || message.includes('air condition')) {
-      const acBuses = schedules.filter(s => s.busType?.includes('AC'));
-      return {
-        text: `❄️ AC buses available on Friday schedules only. ${acBuses.length} AC bus timings: 8:00 AM and 9:30 AM for teachers, with return trips at 12:10 PM and 4:00 PM.`,
-        suggestions: ["AC bus timings", "Teacher schedule", "AC bus routes", "Booking info"]
-      };
-    }
-
-    // Contact information (IIUC Transport)
-    if (message.includes('contact') || message.includes('phone') || message.includes('call')) {
+    // CONTACT INFORMATION (IIUC Transport)
+    if (message.includes('contact') && !message.includes('developer')) {
       return {
         text: "📞 IIUC Transport Contact:\n• Phone: +880-31-2510500\n• Email: transport@iiuc.ac.bd\n• Address: Kumira, Chittagong-4318\n• Service Hours: 6:40 AM - 4:35 PM (Regular), 7:30 AM - 6:30 PM (Friday)",
         suggestions: ["Call transport", "Email query", "Office location", "Developer contact"]
       };
     }
 
-    // Route information
+    // ROUTE INFORMATION
     if (message.includes('route') || message.includes('path') || message.includes('way')) {
       return {
-        text: "🗺️ IIUC buses cover 15+ major routes including:\n• Baroyarhat → Mirshorai → Sitakunda → IIUC\n• BOT → Muradpur → Baizid Link → IIUC\n• Agrabad → Boropool → AK Khan → IIUC\n• Chatteswari → GEC → Khulshi → IIUC",
+        text: "🗺️ IIUC buses cover 15+ major routes including:\n• Baroyarhat → Mirshorai → Sitakunda → IIUC\n• BOT → Muradpur → Baizid Link → IIUC\n• Agrabad → Boropool → AK Khan → IIUC\n• Chatteswari → GEC → Khulshi → IIUC\n• Hathazari → Borodighirpar → Baizid Link → IIUC",
         suggestions: ["Specific route details", "Travel time", "Stops information", "Alternative routes"]
       };
     }
 
-    // Return/shuttle queries
-    if (message.includes('return') || message.includes('back') || message.includes('shuttle')) {
-      const returnBuses = schedules.filter(s => 
-        s.direction === 'IIUCToCity' || s.direction === 'FromUniversity'
-      );
-      
-      return {
-        text: `🔄 Return shuttles: ${returnBuses.length} services from IIUC. Regular shuttles at 11:00 AM, 11:45 AM, 12:15 PM, 1:30 PM, 1:40 PM, 2:55 PM, and 4:35 PM.`,
-        suggestions: ["Shuttle timings", "Return routes", "Last shuttle", "Weekend returns"]
-      };
-    }
-
-    // Timing queries
-    if (message.includes('time') || message.includes('schedule') || message.includes('when')) {
-      return {
-        text: "⏰ Bus Schedules:\n• Regular Days (Sat-Wed): 6:40 AM - 4:35 PM\n• Friday: 7:30 AM - 6:30 PM\n• First bus: 6:40 AM (Female from Baroyarhat)\n• Last return: 4:35 PM (All routes)",
-        suggestions: ["Morning schedules", "Evening schedules", "Friday special", "Weekend info"]
-      };
-    }
-
-    // Help and general queries
+    // HELP AND GENERAL QUERIES
     if (message.includes('help') || message.includes('assist') || message.includes('support')) {
       return {
-        text: "🤝 I can help you with:\n• 🚌 Bus schedules and timings\n• 🗺️ Route information\n• 👥 Gender-specific buses\n• 📅 Friday special schedules\n• 📞 Contact information\n• 🎯 Specific location queries\n• 👨‍💻 Developer information",
+        text: "🤝 I'm your smart bus assistant! I can help you with:\n\n🚌 **Bus Schedules:**\n• Specific time queries (e.g., '7:00 AM buses')\n• Route-based searches (e.g., 'buses from BOT')\n• Gender-specific buses\n• Friday special schedules\n\n📍 **Route Information:**\n• Detailed route maps\n• Travel times\n• Pickup points\n\n👨‍💻 **Developer Info:**\n• Contact details\n• Social profiles\n\nJust ask me anything!",
         suggestions: ["Find my bus", "Route planner", "Contact support", "Who is Anamul Haque?"]
       };
     }
 
-    // Default response with smart suggestions
+    // DEFAULT SMART RESPONSE
     return {
-      text: "🤔 I'd love to help! Could you be more specific? I can assist with bus timings, routes, contact info, or any transport-related questions.",
+      text: "🤔 I'd love to help! I'm a smart bus assistant and can answer specific questions like:\n\n• 'Show buses from BOT at 7:00 AM'\n• 'Female buses to IIUC morning'\n• 'Friday AC bus schedule'\n• 'Return shuttles from IIUC'\n• 'Route from Agrabad to IIUC'\n\nWhat specific bus information do you need?",
       suggestions: [
-        "Show all schedules",
-        "Find buses from my area", 
-        "Friday special timings",
+        "Morning buses from BOT",
+        "Female buses 7:00 AM", 
+        "Friday AC buses",
         "Who is Anamul Haque?"
       ]
     };
@@ -381,7 +568,7 @@ const AIAssistant: React.FC<AIAssistantProps> = ({ schedules }) => {
           <div className={`absolute bottom-full left-1/2 transform -translate-x-1/2 mb-3 px-3 py-2 bg-gray-900 text-white text-sm rounded-lg transition-all duration-200 whitespace-nowrap ${
             isOpen ? 'opacity-0' : 'opacity-0 group-hover:opacity-100'
           }`}>
-            🤖 AI Bus Assistant
+            🤖 Smart Bus Assistant
             <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-gray-900"></div>
           </div>
         </button>
@@ -409,10 +596,10 @@ const AIAssistant: React.FC<AIAssistantProps> = ({ schedules }) => {
                   <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-green-400 rounded-full border-2 border-white"></div>
                 </div>
                 <div>
-                  <h3 className="font-bold text-lg">IIUC Bus Assistant</h3>
+                  <h3 className="font-bold text-lg">Smart Bus Assistant</h3>
                   <p className="text-blue-100 text-sm flex items-center space-x-1">
                     <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
-                    <span>Online & Ready to Help</span>
+                    <span>AI-Powered & Ready</span>
                   </p>
                 </div>
               </div>
@@ -484,7 +671,7 @@ const AIAssistant: React.FC<AIAssistantProps> = ({ schedules }) => {
                         <div className="w-2 h-2 bg-blue-500 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
                         <div className="w-2 h-2 bg-blue-500 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
                       </div>
-                      <span className="text-xs text-gray-500">AI is thinking...</span>
+                      <span className="text-xs text-gray-500">AI analyzing...</span>
                     </div>
                   </div>
                 </div>
@@ -503,7 +690,7 @@ const AIAssistant: React.FC<AIAssistantProps> = ({ schedules }) => {
                     value={inputText}
                     onChange={(e) => setInputText(e.target.value)}
                     onKeyPress={handleKeyPress}
-                    placeholder="Ask about bus schedules, routes, timings..."
+                    placeholder="Ask: 'Buses from BOT at 7:00 AM' or 'Female buses morning'"
                     className="w-full px-4 py-3 border border-gray-300 rounded-2xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all text-sm"
                     disabled={isTyping}
                   />
@@ -511,12 +698,12 @@ const AIAssistant: React.FC<AIAssistantProps> = ({ schedules }) => {
                   {/* Quick Action Buttons */}
                   <div className="absolute right-2 top-1/2 transform -translate-y-1/2 flex items-center space-x-1">
                     <button
-                      onClick={() => handleSuggestionClick("Show morning buses")}
+                      onClick={() => handleSuggestionClick("Buses from BOT at 7:00 AM")}
                       className="p-1.5 text-gray-400 hover:text-blue-500 transition-colors"
-                      title="Morning buses"
+                      title="BOT buses"
                       type="button"
                     >
-                      <Clock className="h-4 w-4" />
+                      <Bus className="h-4 w-4" />
                     </button>
                     <button
                       onClick={() => handleSuggestionClick("Who is Anamul Haque?")}
@@ -541,8 +728,8 @@ const AIAssistant: React.FC<AIAssistantProps> = ({ schedules }) => {
 
               {/* Powered by indicator */}
               <div className="flex items-center justify-center mt-2 text-xs text-gray-500">
-                <Zap className="h-3 w-3 mr-1" />
-                <span>Powered by AI • Real-time Bus Data</span>
+                <Sparkles className="h-3 w-3 mr-1" />
+                <span>Smart AI • Real-time Bus Intelligence</span>
               </div>
             </div>
           </div>
