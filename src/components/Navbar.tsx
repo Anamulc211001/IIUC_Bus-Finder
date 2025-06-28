@@ -28,16 +28,16 @@ const Navbar: React.FC = () => {
         ? 'bg-white/95 backdrop-blur-md shadow-lg border-b border-gray-200/50' 
         : 'bg-transparent'
     }`}>
-      <div className="container mx-auto px-6">
-        <div className="flex items-center justify-between h-20">
+      <div className="container mx-auto px-4 sm:px-6">
+        <div className="flex items-center justify-between h-16 sm:h-20">
           
-          {/* Logo Section */}
-          <div className="flex items-center space-x-3">
+          {/* Logo Section - Responsive */}
+          <div className="flex items-center space-x-2 sm:space-x-3">
             <div className="relative">
               <div className={`absolute inset-0 rounded-full blur-lg opacity-30 transition-colors ${
                 isScrolled ? 'bg-blue-400' : 'bg-white'
               }`}></div>
-              <div className={`relative rounded-full p-2 border transition-all ${
+              <div className={`relative rounded-full p-1.5 sm:p-2 border transition-all ${
                 isScrolled 
                   ? 'bg-blue-50 border-blue-200' 
                   : 'bg-white/10 backdrop-blur-sm border-white/20'
@@ -45,30 +45,39 @@ const Navbar: React.FC = () => {
                 <img 
                   src="/iiuc.png" 
                   alt="IIUC"
-                  className="h-8 w-8 object-contain"
+                  className="h-6 w-6 sm:h-8 sm:w-8 object-contain"
                 />
               </div>
             </div>
             
-            <div className="hidden md:block">
-              <h1 className={`text-xl font-bold transition-colors ${
+            <div className="hidden sm:block">
+              <h1 className={`text-lg sm:text-xl font-bold transition-colors ${
                 isScrolled ? 'text-gray-900' : 'text-white'
               }`}>
                 IIUC Bus Finder
               </h1>
-              <p className={`text-sm transition-colors ${
+              <p className={`text-xs sm:text-sm transition-colors ${
                 isScrolled ? 'text-gray-600' : 'text-blue-200'
               }`}>
                 Smart Transport Solution
               </p>
             </div>
+            
+            {/* Mobile Logo Text */}
+            <div className="block sm:hidden">
+              <h1 className={`text-base font-bold transition-colors ${
+                isScrolled ? 'text-gray-900' : 'text-white'
+              }`}>
+                IIUC Bus
+              </h1>
+            </div>
           </div>
 
-          {/* Desktop Navigation */}
-          <div className="hidden lg:flex items-center space-x-8">
+          {/* Desktop Navigation - Hidden on mobile/tablet */}
+          <div className="hidden xl:flex items-center space-x-6">
             <button
               onClick={() => scrollToSection('home')}
-              className={`flex items-center space-x-2 px-4 py-2 rounded-xl font-medium transition-all hover:scale-105 ${
+              className={`flex items-center space-x-2 px-3 py-2 rounded-xl font-medium transition-all hover:scale-105 ${
                 isScrolled 
                   ? 'text-gray-700 hover:bg-blue-50 hover:text-blue-600' 
                   : 'text-white hover:bg-white/10'
@@ -80,7 +89,7 @@ const Navbar: React.FC = () => {
             
             <button
               onClick={() => scrollToSection('search-filters')}
-              className={`flex items-center space-x-2 px-4 py-2 rounded-xl font-medium transition-all hover:scale-105 ${
+              className={`flex items-center space-x-2 px-3 py-2 rounded-xl font-medium transition-all hover:scale-105 ${
                 isScrolled 
                   ? 'text-gray-700 hover:bg-blue-50 hover:text-blue-600' 
                   : 'text-white hover:bg-white/10'
@@ -92,7 +101,7 @@ const Navbar: React.FC = () => {
             
             <button
               onClick={() => scrollToSection('schedules')}
-              className={`flex items-center space-x-2 px-4 py-2 rounded-xl font-medium transition-all hover:scale-105 ${
+              className={`flex items-center space-x-2 px-3 py-2 rounded-xl font-medium transition-all hover:scale-105 ${
                 isScrolled 
                   ? 'text-gray-700 hover:bg-blue-50 hover:text-blue-600' 
                   : 'text-white hover:bg-white/10'
@@ -104,7 +113,7 @@ const Navbar: React.FC = () => {
             
             <button
               onClick={() => scrollToSection('routes')}
-              className={`flex items-center space-x-2 px-4 py-2 rounded-xl font-medium transition-all hover:scale-105 ${
+              className={`flex items-center space-x-2 px-3 py-2 rounded-xl font-medium transition-all hover:scale-105 ${
                 isScrolled 
                   ? 'text-gray-700 hover:bg-blue-50 hover:text-blue-600' 
                   : 'text-white hover:bg-white/10'
@@ -116,77 +125,89 @@ const Navbar: React.FC = () => {
           </div>
 
           {/* Contact & Mobile Menu */}
-          <div className="flex items-center space-x-4">
-            {/* Contact Button - Desktop */}
+          <div className="flex items-center space-x-2 sm:space-x-4">
+            {/* Contact Button - Hidden on small screens */}
             <a
               href="tel:+880-31-2510500"
-              className={`hidden md:flex items-center space-x-2 px-6 py-3 rounded-2xl font-semibold transition-all hover:scale-105 shadow-lg ${
+              className={`hidden lg:flex items-center space-x-2 px-4 py-2 sm:px-6 sm:py-3 rounded-2xl font-semibold transition-all hover:scale-105 shadow-lg ${
                 isScrolled 
                   ? 'bg-gradient-to-r from-blue-500 to-indigo-600 text-white hover:from-blue-600 hover:to-indigo-700' 
                   : 'bg-white/20 backdrop-blur-sm text-white hover:bg-white/30 border border-white/30'
               }`}
             >
               <Phone className="h-4 w-4" />
-              <span>Contact</span>
+              <span className="hidden lg:inline">Contact</span>
             </a>
 
-            {/* Mobile Menu Button */}
-            <button
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className={`lg:hidden p-3 rounded-xl transition-all ${
+            {/* Mobile Contact Button */}
+            <a
+              href="tel:+880-31-2510500"
+              className={`lg:hidden p-2 sm:p-3 rounded-xl transition-all ${
                 isScrolled 
                   ? 'text-gray-700 hover:bg-gray-100' 
                   : 'text-white hover:bg-white/10'
               }`}
             >
-              {isMobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+              <Phone className="h-5 w-5" />
+            </a>
+
+            {/* Mobile Menu Button */}
+            <button
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              className={`xl:hidden p-2 sm:p-3 rounded-xl transition-all ${
+                isScrolled 
+                  ? 'text-gray-700 hover:bg-gray-100' 
+                  : 'text-white hover:bg-white/10'
+              }`}
+            >
+              {isMobileMenuOpen ? <X className="h-5 w-5 sm:h-6 sm:w-6" /> : <Menu className="h-5 w-5 sm:h-6 sm:w-6" />}
             </button>
           </div>
         </div>
 
-        {/* Mobile Menu */}
+        {/* Mobile Menu - Responsive */}
         {isMobileMenuOpen && (
-          <div className="lg:hidden absolute top-full left-0 right-0 bg-white/95 backdrop-blur-md border-b border-gray-200/50 shadow-lg">
-            <div className="px-6 py-6 space-y-4">
+          <div className="xl:hidden absolute top-full left-0 right-0 bg-white/95 backdrop-blur-md border-b border-gray-200/50 shadow-lg">
+            <div className="px-4 sm:px-6 py-4 sm:py-6 space-y-3 sm:space-y-4">
               <button
                 onClick={() => scrollToSection('home')}
-                className="flex items-center space-x-3 w-full px-4 py-3 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded-xl transition-all"
+                className="flex items-center space-x-3 w-full px-3 sm:px-4 py-2 sm:py-3 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded-xl transition-all"
               >
-                <Bus className="h-5 w-5" />
-                <span className="font-medium">Home</span>
+                <Bus className="h-4 w-4 sm:h-5 sm:w-5" />
+                <span className="font-medium text-sm sm:text-base">Home</span>
               </button>
               
               <button
                 onClick={() => scrollToSection('search-filters')}
-                className="flex items-center space-x-3 w-full px-4 py-3 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded-xl transition-all"
+                className="flex items-center space-x-3 w-full px-3 sm:px-4 py-2 sm:py-3 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded-xl transition-all"
               >
-                <Search className="h-5 w-5" />
-                <span className="font-medium">Search Schedules</span>
+                <Search className="h-4 w-4 sm:h-5 sm:w-5" />
+                <span className="font-medium text-sm sm:text-base">Search Schedules</span>
               </button>
               
               <button
                 onClick={() => scrollToSection('schedules')}
-                className="flex items-center space-x-3 w-full px-4 py-3 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded-xl transition-all"
+                className="flex items-center space-x-3 w-full px-3 sm:px-4 py-2 sm:py-3 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded-xl transition-all"
               >
-                <Clock className="h-5 w-5" />
-                <span className="font-medium">All Schedules</span>
+                <Clock className="h-4 w-4 sm:h-5 sm:w-5" />
+                <span className="font-medium text-sm sm:text-base">All Schedules</span>
               </button>
               
               <button
                 onClick={() => scrollToSection('routes')}
-                className="flex items-center space-x-3 w-full px-4 py-3 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded-xl transition-all"
+                className="flex items-center space-x-3 w-full px-3 sm:px-4 py-2 sm:py-3 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded-xl transition-all"
               >
-                <MapPin className="h-5 w-5" />
-                <span className="font-medium">Route Information</span>
+                <MapPin className="h-4 w-4 sm:h-5 sm:w-5" />
+                <span className="font-medium text-sm sm:text-base">Route Information</span>
               </button>
               
-              <div className="pt-4 border-t border-gray-200">
+              <div className="pt-3 sm:pt-4 border-t border-gray-200">
                 <a
                   href="tel:+880-31-2510500"
-                  className="flex items-center justify-center space-x-2 w-full px-6 py-3 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-2xl font-semibold hover:from-blue-600 hover:to-indigo-700 transition-all shadow-lg"
+                  className="flex items-center justify-center space-x-2 w-full px-4 sm:px-6 py-2 sm:py-3 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-2xl font-semibold hover:from-blue-600 hover:to-indigo-700 transition-all shadow-lg"
                 >
-                  <Phone className="h-5 w-5" />
-                  <span>Contact Transport</span>
+                  <Phone className="h-4 w-4 sm:h-5 sm:w-5" />
+                  <span className="text-sm sm:text-base">Contact Transport</span>
                 </a>
               </div>
             </div>

@@ -4,159 +4,93 @@ import { Bus, GraduationCap, Clock } from 'lucide-react';
 const Header: React.FC = () => {
   return (
 <header
-  className="relative bg-cover bg-center bg-no-repeat text-white overflow-hidden h-[700px] pt-20"
+  className="relative bg-cover bg-center bg-no-repeat text-white overflow-hidden h-[500px] sm:h-[600px] lg:h-[700px] pt-16 sm:pt-20"
   style={{ backgroundImage: "url('/bg-iiuc3.png')" }}
 >
-  {/* Optional: Overlay for readability */}
+  {/* Overlay for readability */}
 <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/30 to-transparent z-0"></div>
 
-  {/* Background Pattern on top of image (optional) */}
+  {/* Background Pattern */}
   <div className="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width=%2260%22 height=%2260%22 viewBox=%220 0 60 60%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cg fill=%22none%22 fill-rule=%22evenodd%22%3E%3Cg fill=%22%23ffffff%22 fill-opacity=%220.03%22%3E%3Ccircle cx=%2230%22 cy=%2230%22 r=%222%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')] opacity-10 z-0"></div>
 
-  <div className="relative container mx-auto px-6 py-12 z-10">
+  <div className="relative container mx-auto px-4 sm:px-6 py-8 sm:py-12 z-10">
     <div className="text-center max-w-4xl mx-auto">
 
-          {/* Animated Bus Icon */}
-      <div className="absolute top-20 right-10 opacity-10">
+      {/* Animated Bus Icon - Hidden on mobile */}
+      <div className="hidden lg:block absolute top-20 right-10 opacity-10">
         <div className="animate-bus-drive">
-          <Bus className="h-32 w-32 text-white transform" />
+          <Bus className="h-24 w-24 xl:h-32 xl:w-32 text-white transform" />
         </div>
       </div>  
       
       {/* Logo Section */}
-<div className="flex items-center justify-center space-x-4 mb-6 animate-fade-slide-up">
+<div className="flex items-center justify-center space-x-3 sm:space-x-4 mb-6 animate-fade-slide-up">
   <div className="relative">
     <div className="absolute inset-0 bg-blue-400 rounded-full blur-lg opacity-30"></div>
-    <div className="relative bg-white/10 backdrop-blur-sm rounded-full p-4 border border-white/20">
-      {/* IIUC Logo Only */}
+    <div className="relative bg-white/10 backdrop-blur-sm rounded-full p-3 sm:p-4 border border-white/20">
       <img 
         src="/iiuc.png" 
         alt="iiuc"
-        className="h-10 w-10 object-contain z-10"
+        className="h-8 w-8 sm:h-10 sm:w-10 object-contain z-10"
       />
     </div>
   </div>
 
-  <div className="h-12 w-px bg-gradient-to-b from-transparent via-white/30 to-transparent"></div>
+  <div className="h-8 sm:h-12 w-px bg-gradient-to-b from-transparent via-white/30 to-transparent"></div>
 
   <div className="relative">
     <div className="absolute inset-0 bg-emerald-400 rounded-full blur-lg opacity-30"></div>
-    <div className="relative bg-white/10 backdrop-blur-sm rounded-full p-4 border border-white/20">
-      <Bus className="h-10 w-10 text-emerald-300" />
+    <div className="relative bg-white/10 backdrop-blur-sm rounded-full p-3 sm:p-4 border border-white/20">
+      <Bus className="h-8 w-8 sm:h-10 sm:w-10 text-emerald-300" />
     </div>
   </div>
 </div>
 
-{/* Title Section with MULTIPLE ANIMATION OPTIONS */}
-<div className="space-y-4">
+{/* Title Section - Responsive Typography */}
+<div className="space-y-3 sm:space-y-4">
   
-  {/* 🔥 OPTION 1: Magnetic Pull (RECOMMENDED - Very Modern) */}
-  <h1 className="text-5xl md:text-6xl font-bold bg-gradient-to-r from-white via-blue-100 to-emerald-100 bg-clip-text text-transparent leading-tight animate-magnetic-pull">
+  {/* Main Title - Responsive Text Sizes */}
+  <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold bg-gradient-to-r from-white via-blue-100 to-emerald-100 bg-clip-text text-transparent leading-tight animate-magnetic-pull px-2">
     IIUC Bus Schedule 2025
   </h1>
 
-  {/* 🌟 OPTION 2: Cyber Scan (Futuristic Tech Feel)
-  <h1 className="text-5xl md:text-6xl font-bold leading-tight animate-cyber-scan bg-gradient-to-r from-cyan-200 via-blue-200 via-purple-200 to-cyan-200 bg-[length:200%_100%] bg-clip-text text-transparent">
-    IIUC Bus Schedule 2025
-  </h1>
-  */}
-
-  {/* ✨ OPTION 3: Hologram Effect (Sci-Fi Style)
-  <h1 className="text-5xl md:text-6xl font-bold bg-gradient-to-r from-cyan-300 via-blue-300 to-purple-300 bg-clip-text text-transparent leading-tight animate-hologram">
-    IIUC Bus Schedule 2025
-  </h1>
-  */}
-
-  {/* 🎭 OPTION 4: Matrix Reveal (Digital/Tech Theme)
-  <h1 className="text-5xl md:text-6xl font-bold bg-gradient-to-r from-green-300 via-emerald-300 to-cyan-300 bg-clip-text text-transparent leading-tight animate-matrix-reveal">
-    IIUC Bus Schedule 2025
-  </h1>
-  */}
-
-  {/* 🌈 OPTION 5: Rainbow Wave (Vibrant & Energetic)
-  <h1 className="text-5xl md:text-6xl font-bold leading-tight animate-rainbow-wave bg-gradient-to-r from-red-300 via-yellow-300 via-green-300 via-blue-300 via-indigo-300 to-purple-300 bg-[length:400%_100%] bg-clip-text text-transparent">
-    IIUC Bus Schedule 2025
-  </h1>
-  */}
-
-  {/* ⚡ OPTION 6: Glitch Effect (Modern/Edgy)
-  <h1 className="text-5xl md:text-6xl font-bold bg-gradient-to-r from-red-300 via-yellow-300 to-blue-300 bg-clip-text text-transparent leading-tight animate-glitch">
-    IIUC Bus Schedule 2025
-  </h1>
-  */}
-
-  {/* 🔄 OPTION 7: Elastic Bounce (Playful & Dynamic)
-  <h1 className="text-5xl md:text-6xl font-bold bg-gradient-to-r from-orange-300 via-pink-300 to-purple-300 bg-clip-text text-transparent leading-tight animate-elastic-bounce">
-    IIUC Bus Schedule 2025
-  </h1>
-  */}
-
-  {/* 💫 OPTION 8: Neon Flicker (Retro Cyberpunk)
-  <h1 className="text-5xl md:text-6xl font-bold text-cyan-300 leading-tight animate-neon-flicker">
-    IIUC Bus Schedule 2025
-  </h1>
-  */}
-
-  {/* 🌊 OPTION 9: Wave Text (Smooth & Flowing)
-  <h1 className="text-5xl md:text-6xl font-bold bg-gradient-to-r from-blue-300 via-teal-300 to-emerald-300 bg-clip-text text-transparent leading-tight animate-wave-text">
-    IIUC Bus Schedule 2025
-  </h1>
-  */}
-
-  {/* 🎯 OPTION 10: Zoom Blur (Cinematic Entry)
-  <h1 className="text-5xl md:text-6xl font-bold bg-gradient-to-r from-white via-blue-100 to-emerald-100 bg-clip-text text-transparent leading-tight animate-zoom-blur">
-    IIUC Bus Schedule 2025
-  </h1>
-  */}
-
-  {/* 🎪 OPTION 11: Flip In (3D Rotation Effect)
-  <h1 className="text-5xl md:text-6xl font-bold bg-gradient-to-r from-purple-300 via-pink-300 to-red-300 bg-clip-text text-transparent leading-tight animate-flip-in">
-    IIUC Bus Schedule 2025
-  </h1>
-  */}
-
-  {/* 🎨 OPTION 12: Gradient Shift (Color Morphing)
-  <h1 className="text-5xl md:text-6xl font-bold leading-tight animate-gradient-shift bg-gradient-to-r from-blue-400 via-purple-400 via-pink-400 to-red-400 bg-[length:300%_100%] bg-clip-text text-transparent">
-    IIUC Bus Schedule 2025
-  </h1>
-  */}
-
-  <div className="flex items-center justify-center space-x-3 text-blue-200 animate-fade-slide-up" style={{ animationDelay: '0.3s' }}>
-    <div className="h-px bg-gradient-to-r from-transparent via-blue-300 to-transparent flex-1 max-w-20"></div>
-    <p className="text-lg font-medium">International Islamic University Chittagong</p>
-    <div className="h-px bg-gradient-to-r from-transparent via-blue-300 to-transparent flex-1 max-w-20"></div>
+  {/* Subtitle - Responsive */}
+  <div className="flex items-center justify-center space-x-2 sm:space-x-3 text-blue-200 animate-fade-slide-up px-4" style={{ animationDelay: '0.3s' }}>
+    <div className="h-px bg-gradient-to-r from-transparent via-blue-300 to-transparent flex-1 max-w-12 sm:max-w-20"></div>
+    <p className="text-sm sm:text-base lg:text-lg font-medium text-center">International Islamic University Chittagong</p>
+    <div className="h-px bg-gradient-to-r from-transparent via-blue-300 to-transparent flex-1 max-w-12 sm:max-w-20"></div>
   </div>
 
-  {/* Updated marquee text line */}
-  <div className="overflow-hidden w-full animate-fade-slide-up" style={{ animationDelay: '0.6s' }}>
-    <p className="text-blue-100/80 text-lg whitespace-nowrap animate-marquee font-medium">
+  {/* Description - Mobile Optimized */}
+  <div className="overflow-hidden w-full animate-fade-slide-up px-4" style={{ animationDelay: '0.6s' }}>
+    <p className="text-blue-100/80 text-sm sm:text-base lg:text-lg whitespace-nowrap animate-marquee font-medium">
       Find your perfect bus schedule with our comprehensive search system. Filter by time, location, and preferences for a seamless commute experience.
     </p>
   </div>
 </div>
 
-          {/* Quick Stats */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-20">
-            <div className="bg-black/30 backdrop-blur-sm rounded-2xl p-6 border border-white/10 animate-fade-slide-up" style={{ animationDelay: '0.9s' }}>
-              <div className="flex items-center justify-center space-x-3 mb-2">
-                <Clock className="h-6 w-6 text-blue-300" />
-                <span className="text-2xl font-bold text-white">50+</span>
+          {/* Quick Stats - Responsive Grid */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 lg:gap-8 mt-12 sm:mt-16 lg:mt-20 px-4">
+            <div className="bg-black/30 backdrop-blur-sm rounded-2xl p-4 sm:p-6 border border-white/10 animate-fade-slide-up" style={{ animationDelay: '0.9s' }}>
+              <div className="flex items-center justify-center space-x-2 sm:space-x-3 mb-2">
+                <Clock className="h-5 w-5 sm:h-6 sm:w-6 text-blue-300" />
+                <span className="text-xl sm:text-2xl font-bold text-white">50+</span>
               </div>
-              <p className="text-blue-200 text-sm">Daily Schedules</p>
+              <p className="text-blue-200 text-xs sm:text-sm">Daily Schedules</p>
             </div>
-            <div className="bg-black/30 backdrop-blur-sm rounded-2xl p-6 border border-white/10 animate-fade-slide-up" style={{ animationDelay: '1.1s' }}>
-              <div className="flex items-center justify-center space-x-3 mb-2">
-                <Bus className="h-6 w-6 text-emerald-300" />
-                <span className="text-2xl font-bold text-white">15+</span>
+            <div className="bg-black/30 backdrop-blur-sm rounded-2xl p-4 sm:p-6 border border-white/10 animate-fade-slide-up" style={{ animationDelay: '1.1s' }}>
+              <div className="flex items-center justify-center space-x-2 sm:space-x-3 mb-2">
+                <Bus className="h-5 w-5 sm:h-6 sm:w-6 text-emerald-300" />
+                <span className="text-xl sm:text-2xl font-bold text-white">15+</span>
               </div>
-              <p className="text-blue-200 text-sm">Routes Available</p>
+              <p className="text-blue-200 text-xs sm:text-sm">Routes Available</p>
             </div>
-            <div className="bg-black/30 backdrop-blur-sm rounded-2xl p-6 border border-white/10 animate-fade-slide-up" style={{ animationDelay: '1.3s' }}>
-              <div className="flex items-center justify-center space-x-3 mb-2">
-                <GraduationCap className="h-6 w-6 text-purple-300" />
-                <span className="text-2xl font-bold text-white">24/7</span>
+            <div className="bg-black/30 backdrop-blur-sm rounded-2xl p-4 sm:p-6 border border-white/10 animate-fade-slide-up sm:col-span-1" style={{ animationDelay: '1.3s' }}>
+              <div className="flex items-center justify-center space-x-2 sm:space-x-3 mb-2">
+                <GraduationCap className="h-5 w-5 sm:h-6 sm:w-6 text-purple-300" />
+                <span className="text-xl sm:text-2xl font-bold text-white">24/7</span>
               </div>
-              <p className="text-blue-200 text-sm">Service Support</p>
+              <p className="text-blue-200 text-xs sm:text-sm">Service Support</p>
             </div>
           </div>
         </div>
@@ -164,7 +98,7 @@ const Header: React.FC = () => {
       
       {/* Bottom Wave */}
       <div className="absolute bottom-0 left-0 right-0">
-        <svg viewBox="0 0 1200 120" fill="none" className="w-full h-8">
+        <svg viewBox="0 0 1200 120" fill="none" className="w-full h-6 sm:h-8">
           <path d="M0,60 C300,120 900,0 1200,60 L1200,120 L0,120 Z" fill="rgb(248 250 252)" />
         </svg>
       </div>

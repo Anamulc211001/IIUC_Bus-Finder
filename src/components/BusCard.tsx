@@ -92,18 +92,18 @@ const BusCard: React.FC<BusCardProps> = ({ schedule }) => {
   };
 
   return (
-    <div className="group bg-white rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-100 overflow-hidden transform hover:-translate-y-1 relative">
+    <div className="group bg-white rounded-2xl sm:rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-100 overflow-hidden transform hover:-translate-y-1 relative">
       
-      {/* Compact Header */}
-      <div className="bg-gradient-to-r from-slate-50 to-gray-50 p-6 border-b border-gray-100">
+      {/* Compact Header - Responsive */}
+      <div className="bg-gradient-to-r from-slate-50 to-gray-50 p-4 sm:p-6 border-b border-gray-100">
         <div className="flex items-center justify-between">
-          <div className="flex items-center space-x-4">
-            <div className="bg-gradient-to-r from-blue-500 to-indigo-600 rounded-2xl p-3">
-              <Clock className="h-6 w-6 text-white" />
+          <div className="flex items-center space-x-3 sm:space-x-4">
+            <div className="bg-gradient-to-r from-blue-500 to-indigo-600 rounded-xl sm:rounded-2xl p-2 sm:p-3">
+              <Clock className="h-5 w-5 sm:h-6 sm:w-6 text-white" />
             </div>
             <div>
-              <span className="text-2xl font-bold text-gray-900">{schedule.time}</span>
-              <div className="flex items-center space-x-3 mt-1">
+              <span className="text-xl sm:text-2xl font-bold text-gray-900">{schedule.time}</span>
+              <div className="flex items-center space-x-2 sm:space-x-3 mt-1">
                 <div className="flex items-center space-x-1">
                   <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
                   <span className="text-xs text-gray-600 font-medium">Live</span>
@@ -116,49 +116,49 @@ const BusCard: React.FC<BusCardProps> = ({ schedule }) => {
             </div>
           </div>
           
-          <div className="flex flex-col space-y-2">
-            <span className={`px-3 py-1 rounded-full text-xs font-bold ${getScheduleTypeColor(schedule.scheduleType)} shadow-sm`}>
+          <div className="flex flex-col space-y-1.5 sm:space-y-2">
+            <span className={`px-2 sm:px-3 py-1 rounded-full text-xs font-bold ${getScheduleTypeColor(schedule.scheduleType)} shadow-sm`}>
               {schedule.scheduleType === 'Friday' ? '🕌 Friday' : '📅 Regular'}
             </span>
-            <span className={`px-3 py-1 rounded-full text-xs font-bold ${getDirectionColor(schedule.direction)} shadow-sm`}>
+            <span className={`px-2 sm:px-3 py-1 rounded-full text-xs font-bold ${getDirectionColor(schedule.direction)} shadow-sm`}>
               {formatDirection(schedule.direction)}
             </span>
           </div>
         </div>
       </div>
 
-      {/* Compact Route Display */}
-      <div className="p-6 space-y-4">
-        {/* Route Summary */}
-        <div className="flex items-center justify-between">
+      {/* Compact Route Display - Responsive */}
+      <div className="p-4 sm:p-6 space-y-3 sm:space-y-4">
+        {/* Route Summary - Mobile Optimized */}
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-3 sm:space-y-0">
           <div className="flex items-center space-x-3 flex-1">
             <div className="bg-green-100 rounded-xl p-2">
               <MapPin className="h-4 w-4 text-green-600" />
             </div>
             <div className="flex-1 min-w-0">
-              <p className="font-bold text-gray-900 truncate">{schedule.startingPoint}</p>
-              <p className="text-sm text-gray-500">Starting Point</p>
+              <p className="font-bold text-gray-900 truncate text-sm sm:text-base">{schedule.startingPoint}</p>
+              <p className="text-xs sm:text-sm text-gray-500">Starting Point</p>
             </div>
           </div>
           
-          <ArrowRight className="h-5 w-5 text-gray-400 mx-4 flex-shrink-0" />
+          <ArrowRight className="h-4 w-4 sm:h-5 sm:w-5 text-gray-400 mx-auto sm:mx-4 flex-shrink-0 rotate-90 sm:rotate-0" />
           
           <div className="flex items-center space-x-3 flex-1">
             <div className="bg-blue-100 rounded-xl p-2">
               <MapPin className="h-4 w-4 text-blue-600" />
             </div>
             <div className="flex-1 min-w-0">
-              <p className="font-bold text-gray-900 truncate">{schedule.endPoint}</p>
-              <p className="text-sm text-gray-500">Destination</p>
+              <p className="font-bold text-gray-900 truncate text-sm sm:text-base">{schedule.endPoint}</p>
+              <p className="text-xs sm:text-sm text-gray-500">Destination</p>
             </div>
           </div>
         </div>
 
-        {/* Expandable Route Details */}
-        <div className="space-y-3">
+        {/* Expandable Route Details - Responsive */}
+        <div className="space-y-2 sm:space-y-3">
           <button
             onClick={() => setIsExpanded(!isExpanded)}
-            className="w-full flex items-center justify-between p-3 bg-gray-50 rounded-2xl hover:bg-gray-100 transition-colors"
+            className="w-full flex items-center justify-between p-2.5 sm:p-3 bg-gray-50 rounded-xl sm:rounded-2xl hover:bg-gray-100 transition-colors"
           >
             <div className="flex items-center space-x-2">
               <Route className="h-4 w-4 text-gray-600" />
@@ -172,38 +172,38 @@ const BusCard: React.FC<BusCardProps> = ({ schedule }) => {
           </button>
           
           {isExpanded && (
-            <div className="bg-gradient-to-r from-indigo-50 to-blue-50 rounded-2xl p-4 border border-indigo-100 animate-fade-slide-up">
-              <p className="text-gray-700 leading-relaxed">{formatRoute(schedule.route)}</p>
+            <div className="bg-gradient-to-r from-indigo-50 to-blue-50 rounded-xl sm:rounded-2xl p-3 sm:p-4 border border-indigo-100 animate-fade-slide-up">
+              <p className="text-gray-700 leading-relaxed text-sm sm:text-base">{formatRoute(schedule.route)}</p>
             </div>
           )}
         </div>
 
-        {/* Compact Tags */}
-        <div className="flex flex-wrap gap-2">
+        {/* Compact Tags - Responsive */}
+        <div className="flex flex-wrap gap-1.5 sm:gap-2">
           {schedule.gender && (
-            <span className={`px-3 py-1 rounded-full text-xs font-semibold ${getGenderColor(schedule.gender)} shadow-sm`}>
+            <span className={`px-2 sm:px-3 py-1 rounded-full text-xs font-semibold ${getGenderColor(schedule.gender)} shadow-sm`}>
               👤 {schedule.gender}
             </span>
           )}
           {schedule.busType && (
-            <span className={`px-3 py-1 rounded-full text-xs font-semibold ${getBusTypeColor(schedule.busType)} shadow-sm`}>
+            <span className={`px-2 sm:px-3 py-1 rounded-full text-xs font-semibold ${getBusTypeColor(schedule.busType)} shadow-sm`}>
               🚌 {schedule.busType}
             </span>
           )}
           {(schedule.remarks || schedule.description) && (
-            <span className={`px-3 py-1 rounded-full text-xs font-semibold ${getRemarksColor(schedule.remarks || schedule.description)} shadow-sm`}>
+            <span className={`px-2 sm:px-3 py-1 rounded-full text-xs font-semibold ${getRemarksColor(schedule.remarks || schedule.description)} shadow-sm`}>
               {schedule.remarks || schedule.description}
             </span>
           )}
         </div>
       </div>
 
-      {/* Enhanced Footer */}
-      <div className="bg-gradient-to-r from-gray-50 to-slate-50 px-6 py-4 border-t border-gray-100">
+      {/* Enhanced Footer - Responsive */}
+      <div className="bg-gradient-to-r from-gray-50 to-slate-50 px-4 sm:px-6 py-3 sm:py-4 border-t border-gray-100">
         <div className="flex items-center justify-between">
-          <div className="flex items-center space-x-4">
-            <div className="flex items-center space-x-2 text-sm text-gray-600">
-              <Bus className="h-4 w-4" />
+          <div className="flex items-center space-x-3 sm:space-x-4">
+            <div className="flex items-center space-x-2 text-xs sm:text-sm text-gray-600">
+              <Bus className="h-3 w-3 sm:h-4 sm:w-4" />
               <span>Live tracking</span>
             </div>
           </div>
@@ -212,8 +212,8 @@ const BusCard: React.FC<BusCardProps> = ({ schedule }) => {
             <span className="text-xs bg-green-100 text-green-700 px-2 py-1 rounded-full font-medium">
               ✓ Active
             </span>
-            <button className="p-2 rounded-full bg-blue-50 text-blue-600 hover:bg-blue-100 transition-colors">
-              <Navigation className="h-4 w-4" />
+            <button className="p-1.5 sm:p-2 rounded-full bg-blue-50 text-blue-600 hover:bg-blue-100 transition-colors">
+              <Navigation className="h-3 w-3 sm:h-4 sm:w-4" />
             </button>
           </div>
         </div>

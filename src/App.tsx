@@ -34,7 +34,7 @@ function App() {
         <Header />
       </div>
       
-      <main className="container mx-auto px-6 pb-12">
+      <main className="container mx-auto px-4 sm:px-6 pb-8 sm:pb-12">
         <div id="search-filters">
           <SearchFilters
             searchTerm={searchTerm}
