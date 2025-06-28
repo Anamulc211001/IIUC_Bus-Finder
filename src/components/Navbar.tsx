@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Bus, Menu, X, Clock, MapPin, Phone, Search } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
+import { Bus, Menu, X, Clock, MapPin, Phone, Search, User, LogOut } from 'lucide-react';
 
 const Navbar: React.FC = () => {
+  const { user, userProfile, signOut } = useAuth();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -22,6 +25,26 @@ const Navbar: React.FC = () => {
     setIsMobileMenuOpen(false);
   };
 
+  const getDashboardRoute = () => {
+    if (!userProfile) return '/login';
+    
+    switch (userProfile.role) {
+      case 'student':
+        return '/student-dashboard';
+      case 'teacher':
+        return '/teacher-dashboard';
+      case 'admin':
+        return '/admin-dashboard';
+      default:
+        return '/login';
+    }
+  };
+
+  const handleLogout = async () => {
+    await signOut();
+    setIsMobileMenuOpen(false);
+  };
+
   return (
     <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
       isScrolled 
@@ -32,7 +55,7 @@ const Navbar: React.FC = () => {
         <div className="flex items-center justify-between h-16 sm:h-20">
           
           {/* Logo Section - Responsive */}
-          <div className="flex items-center space-x-2 sm:space-x-3">
+          <Link to="/" className="flex items-center space-x-2 sm:space-x-3">
             <div className="relative">
               <div className={`absolute inset-0 rounded-full blur-lg opacity-30 transition-colors ${
                 isScrolled ? 'bg-blue-400' : 'bg-white'
@@ -71,7 +94,7 @@ const Navbar: React.FC = () => {
                 IIUC Bus
               </h1>
             </div>
-          </div>
+          </Link>
 
           {/* Desktop Navigation - Hidden on mobile/tablet */}
           <div className="hidden xl:flex items-center space-x-6">
@@ -124,14 +147,67 @@ const Navbar: React.FC = () => {
             </button>
           </div>
 
-          {/* Contact & Mobile Menu */}
+          {/* User Actions & Mobile Menu */}
           <div className="flex items-center space-x-2 sm:space-x-4">
+            
+            {/* User Authentication Section */}
+            {user && userProfile ? (
+              <div className="hidden lg:flex items-center space-x-4">
+                <Link
+                  to={getDashboardRoute()}
+                  className={`flex items-center space-x-2 px-4 py-2 sm:px-6 sm:py-3 rounded-2xl font-semibold transition-all hover:scale-105 shadow-lg ${
+                    isScrolled 
+                      ? 'bg-gradient-to-r from-blue-500 to-indigo-600 text-white hover:from-blue-600 hover:to-indigo-700' 
+                      : 'bg-white/20 backdrop-blur-sm text-white hover:bg-white/30 border border-white/30'
+                  }`}
+                >
+                  <User className="h-4 w-4" />
+                  <span className="hidden lg:inline">Dashboard</span>
+                </Link>
+                
+                <button
+                  onClick={handleLogout}
+                  className={`flex items-center space-x-2 px-4 py-2 rounded-xl font-medium transition-all ${
+                    isScrolled 
+                      ? 'text-red-600 hover:bg-red-50' 
+                      : 'text-white hover:bg-white/10'
+                  }`}
+                >
+                  <LogOut className="h-4 w-4" />
+                  <span className="hidden lg:inline">Logout</span>
+                </button>
+              </div>
+            ) : (
+              <div className="hidden lg:flex items-center space-x-3">
+                <Link
+                  to="/login"
+                  className={`px-4 py-2 rounded-xl font-medium transition-all ${
+                    isScrolled 
+                      ? 'text-gray-700 hover:bg-gray-100' 
+                      : 'text-white hover:bg-white/10'
+                  }`}
+                >
+                  Login
+                </Link>
+                <Link
+                  to="/signup"
+                  className={`px-4 py-2 sm:px-6 sm:py-3 rounded-2xl font-semibold transition-all hover:scale-105 shadow-lg ${
+                    isScrolled 
+                      ? 'bg-gradient-to-r from-blue-500 to-indigo-600 text-white hover:from-blue-600 hover:to-indigo-700' 
+                      : 'bg-white/20 backdrop-blur-sm text-white hover:bg-white/30 border border-white/30'
+                  }`}
+                >
+                  Sign Up
+                </Link>
+              </div>
+            )}
+
             {/* Contact Button - Hidden on small screens */}
             <a
               href="tel:+880-31-2510500"
               className={`hidden lg:flex items-center space-x-2 px-4 py-2 sm:px-6 sm:py-3 rounded-2xl font-semibold transition-all hover:scale-105 shadow-lg ${
                 isScrolled 
-                  ? 'bg-gradient-to-r from-blue-500 to-indigo-600 text-white hover:from-blue-600 hover:to-indigo-700' 
+                  ? 'bg-gradient-to-r from-green-500 to-emerald-600 text-white hover:from-green-600 hover:to-emerald-700' 
                   : 'bg-white/20 backdrop-blur-sm text-white hover:bg-white/30 border border-white/30'
               }`}
             >
@@ -202,13 +278,43 @@ const Navbar: React.FC = () => {
               </button>
               
               <div className="pt-3 sm:pt-4 border-t border-gray-200">
-                <a
-                  href="tel:+880-31-2510500"
-                  className="flex items-center justify-center space-x-2 w-full px-4 sm:px-6 py-2.5 sm:py-3.5 bg-blue-50 text-blue-600 rounded-2xl font-semibold hover:bg-blue-100 transition-all shadow-sm hover:shadow-md border border-blue-200"
-                >
-                  <Phone className="h-4 w-4 sm:h-5 sm:w-5" />
-                  <span className="text-sm sm:text-base">Contact Transport</span>
-                </a>
+                {user && userProfile ? (
+                  <div className="space-y-3">
+                    <Link
+                      to={getDashboardRoute()}
+                      onClick={() => setIsMobileMenuOpen(false)}
+                      className="flex items-center justify-center space-x-2 w-full px-4 sm:px-6 py-2.5 sm:py-3.5 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-2xl font-semibold hover:from-blue-600 hover:to-indigo-700 transition-all shadow-lg"
+                    >
+                      <User className="h-4 w-4 sm:h-5 sm:w-5" />
+                      <span className="text-sm sm:text-base">My Dashboard</span>
+                    </Link>
+                    <button
+                      onClick={handleLogout}
+                      className="flex items-center justify-center space-x-2 w-full px-4 sm:px-6 py-2.5 sm:py-3.5 bg-blue-50 text-blue-600 rounded-2xl font-semibold hover:bg-blue-100 transition-all shadow-sm hover:shadow-md border border-blue-200"
+                    >
+                      <LogOut className="h-4 w-4 sm:h-5 sm:w-5" />
+                      <span className="text-sm sm:text-base">Logout</span>
+                    </button>
+                  </div>
+                ) : (
+                  <div className="space-y-3">
+                    <Link
+                      to="/login"
+                      onClick={() => setIsMobileMenuOpen(false)}
+                      className="flex items-center justify-center space-x-2 w-full px-4 sm:px-6 py-2.5 sm:py-3.5 bg-blue-50 text-blue-600 rounded-2xl font-semibold hover:bg-blue-100 transition-all shadow-sm hover:shadow-md border border-blue-200"
+                    >
+                      <User className="h-4 w-4 sm:h-5 sm:w-5" />
+                      <span className="text-sm sm:text-base">Login</span>
+                    </Link>
+                    <Link
+                      to="/signup"
+                      onClick={() => setIsMobileMenuOpen(false)}
+                      className="flex items-center justify-center space-x-2 w-full px-4 sm:px-6 py-2.5 sm:py-3.5 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-2xl font-semibold hover:from-blue-600 hover:to-indigo-700 transition-all shadow-lg"
+                    >
+                      <span className="text-sm sm:text-base">Sign Up</span>
+                    </Link>
+                  </div>
+                )}
               </div>
             </div>
           </div>
