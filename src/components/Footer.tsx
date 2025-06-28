@@ -1,7 +1,14 @@
 import React from 'react';
-import { Phone, Mail, MapPin, Heart, ExternalLink, Clock, Bus, Users, Globe, MessageCircle, Navigation } from 'lucide-react';
+import { Phone, Mail, MapPin, Heart, ExternalLink, Clock, Bus, Users, Globe, MessageCircle, Navigation, ArrowUp } from 'lucide-react';
 
 const Footer: React.FC = () => {
+  const scrollToTop = () => {
+    window.scrollTo({ 
+      top: 0, 
+      behavior: 'smooth' 
+    });
+  };
+
   return (
     <footer className="bg-gradient-to-br from-slate-900 via-gray-900 to-black text-white mt-12 sm:mt-20 relative overflow-hidden">
       {/* Background Pattern */}
@@ -14,7 +21,25 @@ const Footer: React.FC = () => {
         </svg>
       </div>
 
-      <div className="relative container mx-auto px-4 sm:px-6 py-8 sm:py-12 lg:py-16">
+      {/* Prominent Back to Top Button */}
+      <div className="relative container mx-auto px-4 sm:px-6 pt-12 sm:pt-16">
+        <div className="text-center mb-8 sm:mb-12">
+          <button
+            onClick={scrollToTop}
+            className="group inline-flex items-center space-x-3 sm:space-x-4 px-6 sm:px-8 py-4 sm:py-5 bg-gradient-to-r from-blue-500 via-indigo-600 to-purple-600 hover:from-blue-600 hover:via-indigo-700 hover:to-purple-700 text-white rounded-2xl sm:rounded-3xl font-bold transition-all duration-300 shadow-2xl hover:shadow-blue-500/25 hover:scale-105 border border-white/20"
+          >
+            <div className="bg-white/20 rounded-full p-2 sm:p-3 group-hover:bg-white/30 transition-colors">
+              <ArrowUp className="h-5 w-5 sm:h-6 sm:w-6 group-hover:animate-bounce" />
+            </div>
+            <div className="text-left">
+              <div className="text-base sm:text-lg font-bold">Back to Search</div>
+              <div className="text-xs sm:text-sm text-blue-200 opacity-90">Find your bus schedule</div>
+            </div>
+          </button>
+        </div>
+      </div>
+
+      <div className="relative container mx-auto px-4 sm:px-6 pb-8 sm:pb-12 lg:pb-16">
         {/* Main Footer Content - Responsive Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-10 lg:gap-12 mb-8 sm:mb-12">
           
@@ -67,7 +92,7 @@ const Footer: React.FC = () => {
             </h3>
             <div className="space-y-2 sm:space-y-3">
               <button 
-                onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+                onClick={scrollToTop}
                 className="flex items-center space-x-2 sm:space-x-3 w-full text-left text-gray-300 hover:text-white transition-colors group"
               >
                 <Navigation className="h-3 w-3 sm:h-4 sm:w-4 text-blue-400 group-hover:scale-110 transition-transform" />
