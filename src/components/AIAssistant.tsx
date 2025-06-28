@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { MessageCircle, X, Send, Bot, User, Sparkles, Clock, MapPin, Bus, Phone, Mail, ExternalLink, Zap, Star } from 'lucide-react';
+import { MessageCircle, X, Send, Bot, User, Sparkles, Clock, MapPin, Bus, Phone, Mail, ExternalLink, Zap, Star, Github, Linkedin, Palette } from 'lucide-react';
 
 interface Message {
   id: string;
@@ -25,7 +25,7 @@ const AIAssistant: React.FC<AIAssistantProps> = ({ schedules }) => {
         "Show me morning buses to IIUC",
         "What are Friday schedules?",
         "Find buses from BOT",
-        "Contact information"
+        "Who developed this app?"
       ]
     }
   ]);
@@ -52,11 +52,234 @@ const AIAssistant: React.FC<AIAssistantProps> = ({ schedules }) => {
   const generateResponse = (userMessage: string): { text: string; suggestions?: string[] } => {
     const message = userMessage.toLowerCase();
     
+    // Developer Information Queries - COMPREHENSIVE COVERAGE
+    if (
+      message.includes('developer') || 
+      message.includes('who made') || 
+      message.includes('who created') || 
+      message.includes('who built') || 
+      message.includes('who developed') ||
+      message.includes('creator') ||
+      message.includes('author') ||
+      message.includes('programmer') ||
+      message.includes('coder') ||
+      message.includes('anamul') ||
+      message.includes('md anamul') ||
+      message.includes('shakib') ||
+      message.includes('haque') ||
+      message.includes('contact developer') ||
+      message.includes('developer contact') ||
+      message.includes('developer info') ||
+      message.includes('developer details') ||
+      message.includes('who is the developer') ||
+      message.includes('app developer') ||
+      message.includes('website developer') ||
+      message.includes('made by') ||
+      message.includes('built by') ||
+      message.includes('designed by')
+    ) {
+      return {
+        text: `👨‍💻 **Meet the Developer: Md Anamul Haque**
+
+🎓 **About:**
+• Full-stack developer and IIUC student
+• Passionate about creating solutions for the IIUC community
+• Specializes in modern web development and UI/UX design
+
+📱 **Contact Information:**
+• **Phone:** +880 1680-478706
+• **Email:** anamulshakib6450@gmail.com
+• **Location:** Chittagong, Bangladesh
+
+🌐 **Professional Links:**
+• **GitHub:** github.com/Anamulc211001
+• **LinkedIn:** linkedin.com/in/md-anamul-haque-shakib
+• **Behance:** behance.net/mdanamulhaque6
+
+💡 **About This Project:**
+This IIUC Bus Finder was built with love using React, TypeScript, and Tailwind CSS to help students and faculty find bus schedules easily. It features real-time search, AI assistance, and a modern responsive design.
+
+🚀 **Tech Stack:**
+• Frontend: React + TypeScript + Tailwind CSS
+• Icons: Lucide React
+• Build Tool: Vite
+• Deployment: Modern web standards
+
+Feel free to reach out for any suggestions, feedback, or collaboration opportunities!`,
+        suggestions: [
+          "Call developer: +880 1680-478706",
+          "Email developer",
+          "View GitHub profile",
+          "Connect on LinkedIn",
+          "Back to bus schedules"
+        ]
+      };
+    }
+
+    // Phone/Mobile number queries
+    if (
+      message.includes('phone') && (message.includes('developer') || message.includes('anamul')) ||
+      message.includes('mobile') && (message.includes('developer') || message.includes('anamul')) ||
+      message.includes('number') && (message.includes('developer') || message.includes('anamul')) ||
+      message.includes('call developer') ||
+      message.includes('developer phone') ||
+      message.includes('developer mobile') ||
+      message.includes('developer number')
+    ) {
+      return {
+        text: `📞 **Developer Contact Number:**
+
+**Md Anamul Haque**
+📱 **Mobile:** +880 1680-478706
+
+**Best times to call:**
+• 9:00 AM - 6:00 PM (Bangladesh Time)
+• Available for project discussions, feedback, and collaboration
+
+**Alternative contact:**
+• **Email:** anamulshakib6450@gmail.com
+• **WhatsApp:** Same number (+880 1680-478706)
+
+Feel free to call for any questions about the IIUC Bus Finder app or for web development projects!`,
+        suggestions: [
+          "Call now: +880 1680-478706",
+          "Send WhatsApp message",
+          "Email instead",
+          "View other contact options",
+          "Back to bus info"
+        ]
+      };
+    }
+
+    // Email queries
+    if (
+      message.includes('email') && (message.includes('developer') || message.includes('anamul')) ||
+      message.includes('mail') && (message.includes('developer') || message.includes('anamul')) ||
+      message.includes('developer email') ||
+      message.includes('email developer')
+    ) {
+      return {
+        text: `📧 **Developer Email Contact:**
+
+**Md Anamul Haque**
+✉️ **Email:** anamulshakib6450@gmail.com
+
+**What you can email about:**
+• 🐛 Bug reports or issues with the app
+• 💡 Feature suggestions and improvements
+• 🤝 Collaboration opportunities
+• 💼 Web development projects
+• 📚 IIUC-related tech projects
+• 🎓 Student project guidance
+
+**Response time:** Usually within 24 hours
+
+**Email tips:**
+• Include "IIUC Bus App" in subject line
+• Be specific about your query
+• Attach screenshots for bug reports
+
+Professional and friendly communication is always welcome!`,
+        suggestions: [
+          "Open email app",
+          "Copy email address",
+          "Report a bug",
+          "Suggest a feature",
+          "Back to schedules"
+        ]
+      };
+    }
+
+    // Social media and portfolio queries
+    if (
+      message.includes('github') || 
+      message.includes('linkedin') || 
+      message.includes('behance') ||
+      message.includes('portfolio') ||
+      message.includes('social') ||
+      message.includes('profile') && message.includes('developer')
+    ) {
+      return {
+        text: `🌐 **Developer's Professional Profiles:**
+
+**Md Anamul Haque - Online Presence**
+
+🔗 **GitHub:** github.com/Anamulc211001
+• View source code and projects
+• Open-source contributions
+• Technical repositories
+
+💼 **LinkedIn:** linkedin.com/in/md-anamul-haque-shakib
+• Professional network and experience
+• Connect for career opportunities
+• Industry updates and insights
+
+🎨 **Behance:** behance.net/mdanamulhaque6
+• Creative design portfolio
+• UI/UX design projects
+• Visual design showcase
+
+**Why connect?**
+• See more projects and skills
+• Collaborate on future projects
+• Get updates on new developments
+• Professional networking
+
+All profiles are actively maintained and showcase different aspects of development and design expertise!`,
+        suggestions: [
+          "Visit GitHub",
+          "Connect on LinkedIn",
+          "View Behance portfolio",
+          "See all projects",
+          "Back to bus finder"
+        ]
+      };
+    }
+
+    // Name-specific queries
+    if (
+      message.includes('name') && (message.includes('developer') || message.includes('creator')) ||
+      message.includes('what is') && message.includes('name') ||
+      message.includes('developer name')
+    ) {
+      return {
+        text: `👤 **Developer Name & Identity:**
+
+**Full Name:** Md Anamul Haque
+**Also known as:** Anamul Haque Shakib
+**Nickname:** Anamul
+
+**Background:**
+• 🎓 Student at International Islamic University Chittagong (IIUC)
+• 💻 Full-stack Web Developer
+• 🎨 UI/UX Designer
+• 🚀 Tech Enthusiast
+
+**Specializations:**
+• Modern web applications (React, TypeScript)
+• Responsive design and user experience
+• Database design and backend development
+• Mobile-first development approach
+
+**Mission:**
+Creating digital solutions that make life easier for the IIUC community and beyond!
+
+The IIUC Bus Finder is one of many projects aimed at solving real-world problems through technology.`,
+        suggestions: [
+          "Contact Md Anamul Haque",
+          "View his projects",
+          "Learn about his skills",
+          "Connect professionally",
+          "Back to bus schedules"
+        ]
+      };
+    }
+
     // Greeting responses
     if (message.includes('hello') || message.includes('hi') || message.includes('hey')) {
       return {
         text: "Hello! 👋 I'm here to help you with IIUC bus schedules and transport information. What would you like to know?",
-        suggestions: ["Show bus schedules", "Friday timings", "Route information", "Contact details"]
+        suggestions: ["Show bus schedules", "Friday timings", "Route information", "Who made this app?"]
       };
     }
 
@@ -135,11 +358,11 @@ const AIAssistant: React.FC<AIAssistantProps> = ({ schedules }) => {
       };
     }
 
-    // Contact information
+    // Contact information (IIUC Transport)
     if (message.includes('contact') || message.includes('phone') || message.includes('call')) {
       return {
         text: "📞 IIUC Transport Contact:\n• Phone: +880-31-2510500\n• Email: transport@iiuc.ac.bd\n• Address: Kumira, Chittagong-4318\n• Service Hours: 6:40 AM - 4:35 PM (Regular), 7:30 AM - 6:30 PM (Friday)",
-        suggestions: ["Call transport", "Email query", "Office location", "Service hours"]
+        suggestions: ["Call transport", "Email query", "Office location", "Developer contact"]
       };
     }
 
@@ -174,8 +397,8 @@ const AIAssistant: React.FC<AIAssistantProps> = ({ schedules }) => {
     // Help and general queries
     if (message.includes('help') || message.includes('assist') || message.includes('support')) {
       return {
-        text: "🤝 I can help you with:\n• 🚌 Bus schedules and timings\n• 🗺️ Route information\n• 👥 Gender-specific buses\n• 📅 Friday special schedules\n• 📞 Contact information\n• 🎯 Specific location queries",
-        suggestions: ["Find my bus", "Route planner", "Contact support", "Schedule updates"]
+        text: "🤝 I can help you with:\n• 🚌 Bus schedules and timings\n• 🗺️ Route information\n• 👥 Gender-specific buses\n• 📅 Friday special schedules\n• 📞 Contact information\n• 🎯 Specific location queries\n• 👨‍💻 Developer information",
+        suggestions: ["Find my bus", "Route planner", "Contact support", "Meet the developer"]
       };
     }
 
@@ -186,7 +409,7 @@ const AIAssistant: React.FC<AIAssistantProps> = ({ schedules }) => {
         "Show all schedules",
         "Find buses from my area", 
         "Friday special timings",
-        "Contact transport office"
+        "Who developed this app?"
       ]
     };
   };
@@ -411,12 +634,12 @@ const AIAssistant: React.FC<AIAssistantProps> = ({ schedules }) => {
                       <Clock className="h-4 w-4" />
                     </button>
                     <button
-                      onClick={() => handleSuggestionClick("Contact information")}
-                      className="p-1.5 text-gray-400 hover:text-green-500 transition-colors"
-                      title="Contact info"
+                      onClick={() => handleSuggestionClick("Who developed this app?")}
+                      className="p-1.5 text-gray-400 hover:text-purple-500 transition-colors"
+                      title="Developer info"
                       type="button"
                     >
-                      <Phone className="h-4 w-4" />
+                      <User className="h-4 w-4" />
                     </button>
                   </div>
                 </div>
