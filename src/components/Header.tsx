@@ -47,27 +47,76 @@ const Header: React.FC = () => {
   </div>
 </div>
 
-{/* Title Section with Multiple Animation Options */}
+{/* Title Section with MULTIPLE ANIMATION OPTIONS */}
 <div className="space-y-4">
-  {/* Option 1: Fade Slide Up with Glow (RECOMMENDED) */}
-  <h1 className="text-5xl md:text-6xl font-bold bg-gradient-to-r from-white via-blue-100 to-emerald-100 bg-clip-text text-transparent leading-tight animate-fade-slide-up animate-glow-pulse">
+  
+  {/* 🔥 OPTION 1: Magnetic Pull (RECOMMENDED - Very Modern) */}
+  <h1 className="text-5xl md:text-6xl font-bold bg-gradient-to-r from-white via-blue-100 to-emerald-100 bg-clip-text text-transparent leading-tight animate-magnetic-pull">
     IIUC Bus Schedule 2025
   </h1>
 
-  {/* Option 2: Bounce In Effect (Uncomment to use)
-  <h1 className="text-5xl md:text-6xl font-bold bg-gradient-to-r from-white via-blue-100 to-emerald-100 bg-clip-text text-transparent leading-tight animate-bounce-in">
-    IIUC Bus Schedule 2025
-  </h1>
-  */}
-
-  {/* Option 3: Shimmer Effect (Uncomment to use)
-  <h1 className="text-5xl md:text-6xl font-bold leading-tight animate-scale-in bg-gradient-to-r from-white via-blue-200 via-emerald-200 to-white bg-[length:200%_100%] bg-clip-text text-transparent animate-text-shimmer">
+  {/* 🌟 OPTION 2: Cyber Scan (Futuristic Tech Feel)
+  <h1 className="text-5xl md:text-6xl font-bold leading-tight animate-cyber-scan bg-gradient-to-r from-cyan-200 via-blue-200 via-purple-200 to-cyan-200 bg-[length:200%_100%] bg-clip-text text-transparent">
     IIUC Bus Schedule 2025
   </h1>
   */}
 
-  {/* Option 4: Slide In Right (Uncomment to use)
-  <h1 className="text-5xl md:text-6xl font-bold bg-gradient-to-r from-white via-blue-100 to-emerald-100 bg-clip-text text-transparent leading-tight animate-slide-in-right">
+  {/* ✨ OPTION 3: Hologram Effect (Sci-Fi Style)
+  <h1 className="text-5xl md:text-6xl font-bold bg-gradient-to-r from-cyan-300 via-blue-300 to-purple-300 bg-clip-text text-transparent leading-tight animate-hologram">
+    IIUC Bus Schedule 2025
+  </h1>
+  */}
+
+  {/* 🎭 OPTION 4: Matrix Reveal (Digital/Tech Theme)
+  <h1 className="text-5xl md:text-6xl font-bold bg-gradient-to-r from-green-300 via-emerald-300 to-cyan-300 bg-clip-text text-transparent leading-tight animate-matrix-reveal">
+    IIUC Bus Schedule 2025
+  </h1>
+  */}
+
+  {/* 🌈 OPTION 5: Rainbow Wave (Vibrant & Energetic)
+  <h1 className="text-5xl md:text-6xl font-bold leading-tight animate-rainbow-wave bg-gradient-to-r from-red-300 via-yellow-300 via-green-300 via-blue-300 via-indigo-300 to-purple-300 bg-[length:400%_100%] bg-clip-text text-transparent">
+    IIUC Bus Schedule 2025
+  </h1>
+  */}
+
+  {/* ⚡ OPTION 6: Glitch Effect (Modern/Edgy)
+  <h1 className="text-5xl md:text-6xl font-bold bg-gradient-to-r from-red-300 via-yellow-300 to-blue-300 bg-clip-text text-transparent leading-tight animate-glitch">
+    IIUC Bus Schedule 2025
+  </h1>
+  */}
+
+  {/* 🔄 OPTION 7: Elastic Bounce (Playful & Dynamic)
+  <h1 className="text-5xl md:text-6xl font-bold bg-gradient-to-r from-orange-300 via-pink-300 to-purple-300 bg-clip-text text-transparent leading-tight animate-elastic-bounce">
+    IIUC Bus Schedule 2025
+  </h1>
+  */}
+
+  {/* 💫 OPTION 8: Neon Flicker (Retro Cyberpunk)
+  <h1 className="text-5xl md:text-6xl font-bold text-cyan-300 leading-tight animate-neon-flicker">
+    IIUC Bus Schedule 2025
+  </h1>
+  */}
+
+  {/* 🌊 OPTION 9: Wave Text (Smooth & Flowing)
+  <h1 className="text-5xl md:text-6xl font-bold bg-gradient-to-r from-blue-300 via-teal-300 to-emerald-300 bg-clip-text text-transparent leading-tight animate-wave-text">
+    IIUC Bus Schedule 2025
+  </h1>
+  */}
+
+  {/* 🎯 OPTION 10: Zoom Blur (Cinematic Entry)
+  <h1 className="text-5xl md:text-6xl font-bold bg-gradient-to-r from-white via-blue-100 to-emerald-100 bg-clip-text text-transparent leading-tight animate-zoom-blur">
+    IIUC Bus Schedule 2025
+  </h1>
+  */}
+
+  {/* 🎪 OPTION 11: Flip In (3D Rotation Effect)
+  <h1 className="text-5xl md:text-6xl font-bold bg-gradient-to-r from-purple-300 via-pink-300 to-red-300 bg-clip-text text-transparent leading-tight animate-flip-in">
+    IIUC Bus Schedule 2025
+  </h1>
+  */}
+
+  {/* 🎨 OPTION 12: Gradient Shift (Color Morphing)
+  <h1 className="text-5xl md:text-6xl font-bold leading-tight animate-gradient-shift bg-gradient-to-r from-blue-400 via-purple-400 via-pink-400 to-red-400 bg-[length:300%_100%] bg-clip-text text-transparent">
     IIUC Bus Schedule 2025
   </h1>
   */}
