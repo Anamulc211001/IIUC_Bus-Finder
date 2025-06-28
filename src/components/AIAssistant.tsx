@@ -233,348 +233,212 @@ const AIAssistant: React.FC<AIAssistantProps> = ({ schedules }) => {
     }
   };
 
+  // Toggle function with debugging
+  const toggleChat = () => {
+    console.log('AI Assistant button clicked, current state:', isOpen);
+    setIsOpen(!isOpen);
+  };
+
   return (
     <>
-      {/* Chat Widget Button - Positioned on left side */}
-      <div className="fixed left-4 sm:left-6 top-1/2 transform -translate-y-1/2 z-50">
+      {/* Chat Widget Button - Fixed positioning on left side */}
+      <div className="fixed bottom-6 left-6 z-50">
         <button
-          onClick={() => setIsOpen(!isOpen)}
-          className={`group relative bg-gradient-to-r from-blue-500 via-purple-500 to-indigo-600 hover:from-blue-600 hover:via-purple-600 hover:to-indigo-700 text-white p-3 sm:p-4 rounded-full shadow-2xl hover:shadow-blue-500/25 transition-all duration-300 border-2 border-white/20 backdrop-blur-sm ${
+          onClick={toggleChat}
+          className={`group relative bg-gradient-to-r from-blue-500 via-purple-500 to-indigo-600 hover:from-blue-600 hover:via-purple-600 hover:to-indigo-700 text-white p-4 rounded-full shadow-2xl hover:shadow-blue-500/25 transition-all duration-300 border-2 border-white/20 backdrop-blur-sm ${
             isOpen ? 'scale-110' : 'hover:scale-110 animate-pulse'
           }`}
           aria-label="Open AI Assistant"
+          type="button"
         >
           {/* Notification Badge */}
           {!isOpen && (
-            <div className="absolute -top-2 -right-2 w-5 h-5 sm:w-6 sm:h-6 bg-red-500 rounded-full flex items-center justify-center text-xs font-bold animate-bounce">
-              <Sparkles className="h-2 w-2 sm:h-3 sm:w-3" />
+            <div className="absolute -top-2 -right-2 w-6 h-6 bg-red-500 rounded-full flex items-center justify-center text-xs font-bold animate-bounce">
+              <Sparkles className="h-3 w-3" />
             </div>
           )}
 
           {/* Icon */}
           {isOpen ? (
-            <X className="h-5 w-5 sm:h-6 sm:w-6 transition-transform duration-300" />
+            <X className="h-6 w-6 transition-transform duration-300" />
           ) : (
             <div className="relative">
-              <Bot className="h-5 w-5 sm:h-6 sm:w-6 transition-transform duration-300 group-hover:rotate-12" />
-              <div className="absolute -top-1 -right-1 w-2.5 h-2.5 sm:w-3 sm:h-3 bg-green-400 rounded-full animate-ping"></div>
-              <div className="absolute -top-1 -right-1 w-2.5 h-2.5 sm:w-3 sm:h-3 bg-green-400 rounded-full"></div>
+              <Bot className="h-6 w-6 transition-transform duration-300 group-hover:rotate-12" />
+              <div className="absolute -top-1 -right-1 w-3 h-3 bg-green-400 rounded-full animate-ping"></div>
+              <div className="absolute -top-1 -right-1 w-3 h-3 bg-green-400 rounded-full"></div>
             </div>
           )}
 
           {/* Tooltip */}
-          <div className={`absolute left-full top-1/2 transform -translate-y-1/2 ml-3 px-3 py-2 bg-gray-900 text-white text-sm rounded-lg transition-all duration-200 whitespace-nowrap ${
+          <div className={`absolute bottom-full left-1/2 transform -translate-x-1/2 mb-3 px-3 py-2 bg-gray-900 text-white text-sm rounded-lg transition-all duration-200 whitespace-nowrap ${
             isOpen ? 'opacity-0' : 'opacity-0 group-hover:opacity-100'
           }`}>
             🤖 AI Bus Assistant
-            <div className="absolute right-full top-1/2 transform -translate-y-1/2 w-0 h-0 border-t-4 border-b-4 border-r-4 border-transparent border-r-gray-900"></div>
+            <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-gray-900"></div>
           </div>
         </button>
       </div>
 
-      {/* Chat Window - COMPLETELY REDESIGNED FOR FULL VISIBILITY */}
+      {/* Chat Window - Conditional rendering with proper z-index */}
       {isOpen && (
-        <>
-          {/* Full Screen Backdrop */}
-          <div className="fixed inset-0 bg-black/50 z-40" onClick={() => setIsOpen(false)} />
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 animate-fade-slide-up">
+          {/* Backdrop */}
+          <div 
+            className="absolute inset-0 bg-black/50 backdrop-blur-sm" 
+            onClick={() => setIsOpen(false)}
+          />
           
-          {/* Chat Container - GUARANTEED FULL VISIBILITY */}
-          <div className="fixed z-50 animate-fade-slide-up">
-            {/* Mobile: Full screen with safe margins */}
-            <div className="sm:hidden fixed inset-0 p-4 flex items-center justify-center">
-              <div className="w-full h-full max-w-md bg-white rounded-2xl shadow-2xl border border-gray-200 flex flex-col overflow-hidden">
-                
-                {/* Header */}
-                <div className="bg-gradient-to-r from-blue-500 via-purple-500 to-indigo-600 text-white p-4 flex items-center justify-between flex-shrink-0">
-                  <div className="flex items-center space-x-3">
-                    <div className="relative">
-                      <div className="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center">
-                        <Bot className="h-6 w-6" />
-                      </div>
-                      <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-green-400 rounded-full border-2 border-white"></div>
-                    </div>
-                    <div>
-                      <h3 className="font-bold text-lg">IIUC Bus Assistant</h3>
-                      <p className="text-blue-100 text-sm flex items-center space-x-1">
-                        <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
-                        <span>Online & Ready to Help</span>
-                      </p>
-                    </div>
+          {/* Chat Container */}
+          <div className="relative w-full max-w-md sm:max-w-lg lg:max-w-xl h-full max-h-[90vh] bg-white rounded-2xl shadow-2xl border border-gray-200 flex flex-col overflow-hidden">
+            
+            {/* Header */}
+            <div className="bg-gradient-to-r from-blue-500 via-purple-500 to-indigo-600 text-white p-4 flex items-center justify-between flex-shrink-0">
+              <div className="flex items-center space-x-3">
+                <div className="relative">
+                  <div className="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center">
+                    <Bot className="h-6 w-6" />
                   </div>
-                  
-                  <button
-                    onClick={() => setIsOpen(false)}
-                    className="p-2 hover:bg-white/20 rounded-lg transition-colors"
-                  >
-                    <X className="h-5 w-5" />
-                  </button>
+                  <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-green-400 rounded-full border-2 border-white"></div>
                 </div>
-
-                {/* Messages */}
-                <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-gray-50 min-h-0">
-                  {messages.map((message) => (
-                    <div key={message.id} className={`flex ${message.isBot ? 'justify-start' : 'justify-end'}`}>
-                      <div className={`max-w-[85%] px-4 py-3 rounded-2xl ${
-                        message.isBot 
-                          ? 'bg-white text-gray-800 shadow-md border border-gray-200' 
-                          : 'bg-gradient-to-r from-blue-500 to-purple-600 text-white shadow-lg'
-                      }`}>
-                        
-                        {/* Message Header */}
-                        <div className="flex items-center space-x-2 mb-2">
-                          {message.isBot ? (
-                            <Bot className="h-4 w-4 text-blue-500" />
-                          ) : (
-                            <User className="h-4 w-4 text-white" />
-                          )}
-                          <span className="text-xs opacity-75">
-                            {message.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-                          </span>
-                        </div>
-
-                        {/* Message Text */}
-                        <p className="text-sm leading-relaxed whitespace-pre-line">{message.text}</p>
-
-                        {/* Suggestions */}
-                        {message.suggestions && (
-                          <div className="mt-3 space-y-2">
-                            <p className="text-xs opacity-75 font-medium">Quick actions:</p>
-                            <div className="flex flex-wrap gap-2">
-                              {message.suggestions.map((suggestion, index) => (
-                                <button
-                                  key={index}
-                                  onClick={() => handleSuggestionClick(suggestion)}
-                                  className="px-3 py-1 bg-blue-50 text-blue-600 rounded-full text-xs font-medium hover:bg-blue-100 transition-colors border border-blue-200"
-                                >
-                                  {suggestion}
-                                </button>
-                              ))}
-                            </div>
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                  ))}
-
-                  {/* Typing Indicator */}
-                  {isTyping && (
-                    <div className="flex justify-start">
-                      <div className="bg-white text-gray-800 px-4 py-3 rounded-2xl shadow-md border border-gray-200 max-w-xs">
-                        <div className="flex items-center space-x-2">
-                          <Bot className="h-4 w-4 text-blue-500" />
-                          <div className="flex space-x-1">
-                            <div className="w-2 h-2 bg-blue-500 rounded-full animate-bounce"></div>
-                            <div className="w-2 h-2 bg-blue-500 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
-                            <div className="w-2 h-2 bg-blue-500 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
-                          </div>
-                          <span className="text-xs text-gray-500">AI is thinking...</span>
-                        </div>
-                      </div>
-                    </div>
-                  )}
-                  
-                  <div ref={messagesEndRef} />
-                </div>
-
-                {/* Input */}
-                <div className="p-4 border-t border-gray-200 bg-white flex-shrink-0">
-                  <div className="flex items-center space-x-3">
-                    <div className="flex-1 relative">
-                      <input
-                        ref={inputRef}
-                        type="text"
-                        value={inputText}
-                        onChange={(e) => setInputText(e.target.value)}
-                        onKeyPress={handleKeyPress}
-                        placeholder="Ask about bus schedules, routes, timings..."
-                        className="w-full px-4 py-3 border border-gray-300 rounded-2xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all text-sm"
-                        disabled={isTyping}
-                      />
-                      
-                      {/* Quick Action Buttons */}
-                      <div className="absolute right-2 top-1/2 transform -translate-y-1/2 flex items-center space-x-1">
-                        <button
-                          onClick={() => handleSuggestionClick("Show morning buses")}
-                          className="p-1.5 text-gray-400 hover:text-blue-500 transition-colors"
-                          title="Morning buses"
-                        >
-                          <Clock className="h-4 w-4" />
-                        </button>
-                        <button
-                          onClick={() => handleSuggestionClick("Contact information")}
-                          className="p-1.5 text-gray-400 hover:text-green-500 transition-colors"
-                          title="Contact info"
-                        >
-                          <Phone className="h-4 w-4" />
-                        </button>
-                      </div>
-                    </div>
-                    
-                    <button
-                      onClick={handleSendMessage}
-                      disabled={!inputText.trim() || isTyping}
-                      className="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 disabled:from-gray-300 disabled:to-gray-400 text-white p-3 rounded-2xl transition-all shadow-lg hover:shadow-xl disabled:cursor-not-allowed"
-                    >
-                      <Send className="h-5 w-5" />
-                    </button>
-                  </div>
-
-                  {/* Powered by indicator */}
-                  <div className="flex items-center justify-center mt-2 text-xs text-gray-500">
-                    <Zap className="h-3 w-3 mr-1" />
-                    <span>Powered by AI • Real-time Bus Data</span>
-                  </div>
+                <div>
+                  <h3 className="font-bold text-lg">IIUC Bus Assistant</h3>
+                  <p className="text-blue-100 text-sm flex items-center space-x-1">
+                    <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+                    <span>Online & Ready to Help</span>
+                  </p>
                 </div>
               </div>
+              
+              <button
+                onClick={() => setIsOpen(false)}
+                className="p-2 hover:bg-white/20 rounded-lg transition-colors"
+                type="button"
+              >
+                <X className="h-5 w-5" />
+              </button>
             </div>
 
-            {/* Desktop: Positioned from left with safe margins */}
-            <div className="hidden sm:block fixed left-20 top-1/2 transform -translate-y-1/2 w-80 lg:w-96 h-[500px] lg:h-[600px] max-h-[90vh] bg-white rounded-2xl shadow-2xl border border-gray-200 flex flex-col overflow-hidden">
-              
-              {/* Header */}
-              <div className="bg-gradient-to-r from-blue-500 via-purple-500 to-indigo-600 text-white p-4 flex items-center justify-between flex-shrink-0">
-                <div className="flex items-center space-x-3">
-                  <div className="relative">
-                    <div className="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center">
-                      <Bot className="h-6 w-6" />
+            {/* Messages */}
+            <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-gray-50 min-h-0">
+              {messages.map((message) => (
+                <div key={message.id} className={`flex ${message.isBot ? 'justify-start' : 'justify-end'}`}>
+                  <div className={`max-w-[85%] px-4 py-3 rounded-2xl ${
+                    message.isBot 
+                      ? 'bg-white text-gray-800 shadow-md border border-gray-200' 
+                      : 'bg-gradient-to-r from-blue-500 to-purple-600 text-white shadow-lg'
+                  }`}>
+                    
+                    {/* Message Header */}
+                    <div className="flex items-center space-x-2 mb-2">
+                      {message.isBot ? (
+                        <Bot className="h-4 w-4 text-blue-500" />
+                      ) : (
+                        <User className="h-4 w-4 text-white" />
+                      )}
+                      <span className="text-xs opacity-75">
+                        {message.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                      </span>
                     </div>
-                    <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-green-400 rounded-full border-2 border-white"></div>
+
+                    {/* Message Text */}
+                    <p className="text-sm leading-relaxed whitespace-pre-line">{message.text}</p>
+
+                    {/* Suggestions */}
+                    {message.suggestions && (
+                      <div className="mt-3 space-y-2">
+                        <p className="text-xs opacity-75 font-medium">Quick actions:</p>
+                        <div className="flex flex-wrap gap-2">
+                          {message.suggestions.map((suggestion, index) => (
+                            <button
+                              key={index}
+                              onClick={() => handleSuggestionClick(suggestion)}
+                              className="px-3 py-1 bg-blue-50 text-blue-600 rounded-full text-xs font-medium hover:bg-blue-100 transition-colors border border-blue-200"
+                              type="button"
+                            >
+                              {suggestion}
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+                    )}
                   </div>
-                  <div>
-                    <h3 className="font-bold text-lg">IIUC Bus Assistant</h3>
-                    <p className="text-blue-100 text-sm flex items-center space-x-1">
-                      <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
-                      <span>Online & Ready to Help</span>
-                    </p>
+                </div>
+              ))}
+
+              {/* Typing Indicator */}
+              {isTyping && (
+                <div className="flex justify-start">
+                  <div className="bg-white text-gray-800 px-4 py-3 rounded-2xl shadow-md border border-gray-200 max-w-xs">
+                    <div className="flex items-center space-x-2">
+                      <Bot className="h-4 w-4 text-blue-500" />
+                      <div className="flex space-x-1">
+                        <div className="w-2 h-2 bg-blue-500 rounded-full animate-bounce"></div>
+                        <div className="w-2 h-2 bg-blue-500 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
+                        <div className="w-2 h-2 bg-blue-500 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
+                      </div>
+                      <span className="text-xs text-gray-500">AI is thinking...</span>
+                    </div>
+                  </div>
+                </div>
+              )}
+              
+              <div ref={messagesEndRef} />
+            </div>
+
+            {/* Input */}
+            <div className="p-4 border-t border-gray-200 bg-white flex-shrink-0">
+              <div className="flex items-center space-x-3">
+                <div className="flex-1 relative">
+                  <input
+                    ref={inputRef}
+                    type="text"
+                    value={inputText}
+                    onChange={(e) => setInputText(e.target.value)}
+                    onKeyPress={handleKeyPress}
+                    placeholder="Ask about bus schedules, routes, timings..."
+                    className="w-full px-4 py-3 border border-gray-300 rounded-2xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all text-sm"
+                    disabled={isTyping}
+                  />
+                  
+                  {/* Quick Action Buttons */}
+                  <div className="absolute right-2 top-1/2 transform -translate-y-1/2 flex items-center space-x-1">
+                    <button
+                      onClick={() => handleSuggestionClick("Show morning buses")}
+                      className="p-1.5 text-gray-400 hover:text-blue-500 transition-colors"
+                      title="Morning buses"
+                      type="button"
+                    >
+                      <Clock className="h-4 w-4" />
+                    </button>
+                    <button
+                      onClick={() => handleSuggestionClick("Contact information")}
+                      className="p-1.5 text-gray-400 hover:text-green-500 transition-colors"
+                      title="Contact info"
+                      type="button"
+                    >
+                      <Phone className="h-4 w-4" />
+                    </button>
                   </div>
                 </div>
                 
                 <button
-                  onClick={() => setIsOpen(false)}
-                  className="p-2 hover:bg-white/20 rounded-lg transition-colors"
+                  onClick={handleSendMessage}
+                  disabled={!inputText.trim() || isTyping}
+                  className="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 disabled:from-gray-300 disabled:to-gray-400 text-white p-3 rounded-2xl transition-all shadow-lg hover:shadow-xl disabled:cursor-not-allowed"
+                  type="button"
                 >
-                  <X className="h-5 w-5" />
+                  <Send className="h-5 w-5" />
                 </button>
               </div>
 
-              {/* Messages */}
-              <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-gray-50 min-h-0">
-                {messages.map((message) => (
-                  <div key={message.id} className={`flex ${message.isBot ? 'justify-start' : 'justify-end'}`}>
-                    <div className={`max-w-xs lg:max-w-sm px-4 py-3 rounded-2xl ${
-                      message.isBot 
-                        ? 'bg-white text-gray-800 shadow-md border border-gray-200' 
-                        : 'bg-gradient-to-r from-blue-500 to-purple-600 text-white shadow-lg'
-                    }`}>
-                      
-                      {/* Message Header */}
-                      <div className="flex items-center space-x-2 mb-2">
-                        {message.isBot ? (
-                          <Bot className="h-4 w-4 text-blue-500" />
-                        ) : (
-                          <User className="h-4 w-4 text-white" />
-                        )}
-                        <span className="text-xs opacity-75">
-                          {message.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-                        </span>
-                      </div>
-
-                      {/* Message Text */}
-                      <p className="text-sm leading-relaxed whitespace-pre-line">{message.text}</p>
-
-                      {/* Suggestions */}
-                      {message.suggestions && (
-                        <div className="mt-3 space-y-2">
-                          <p className="text-xs opacity-75 font-medium">Quick actions:</p>
-                          <div className="flex flex-wrap gap-2">
-                            {message.suggestions.map((suggestion, index) => (
-                              <button
-                                key={index}
-                                onClick={() => handleSuggestionClick(suggestion)}
-                                className="px-3 py-1 bg-blue-50 text-blue-600 rounded-full text-xs font-medium hover:bg-blue-100 transition-colors border border-blue-200"
-                              >
-                                {suggestion}
-                              </button>
-                            ))}
-                          </div>
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                ))}
-
-                {/* Typing Indicator */}
-                {isTyping && (
-                  <div className="flex justify-start">
-                    <div className="bg-white text-gray-800 px-4 py-3 rounded-2xl shadow-md border border-gray-200 max-w-xs">
-                      <div className="flex items-center space-x-2">
-                        <Bot className="h-4 w-4 text-blue-500" />
-                        <div className="flex space-x-1">
-                          <div className="w-2 h-2 bg-blue-500 rounded-full animate-bounce"></div>
-                          <div className="w-2 h-2 bg-blue-500 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
-                          <div className="w-2 h-2 bg-blue-500 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
-                        </div>
-                        <span className="text-xs text-gray-500">AI is thinking...</span>
-                      </div>
-                    </div>
-                  </div>
-                )}
-                
-                <div ref={messagesEndRef} />
-              </div>
-
-              {/* Input */}
-              <div className="p-4 border-t border-gray-200 bg-white flex-shrink-0">
-                <div className="flex items-center space-x-3">
-                  <div className="flex-1 relative">
-                    <input
-                      ref={inputRef}
-                      type="text"
-                      value={inputText}
-                      onChange={(e) => setInputText(e.target.value)}
-                      onKeyPress={handleKeyPress}
-                      placeholder="Ask about bus schedules, routes, timings..."
-                      className="w-full px-4 py-3 border border-gray-300 rounded-2xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all text-sm"
-                      disabled={isTyping}
-                    />
-                    
-                    {/* Quick Action Buttons */}
-                    <div className="absolute right-2 top-1/2 transform -translate-y-1/2 flex items-center space-x-1">
-                      <button
-                        onClick={() => handleSuggestionClick("Show morning buses")}
-                        className="p-1.5 text-gray-400 hover:text-blue-500 transition-colors"
-                        title="Morning buses"
-                      >
-                        <Clock className="h-4 w-4" />
-                      </button>
-                      <button
-                        onClick={() => handleSuggestionClick("Contact information")}
-                        className="p-1.5 text-gray-400 hover:text-green-500 transition-colors"
-                        title="Contact info"
-                      >
-                        <Phone className="h-4 w-4" />
-                      </button>
-                    </div>
-                  </div>
-                  
-                  <button
-                    onClick={handleSendMessage}
-                    disabled={!inputText.trim() || isTyping}
-                    className="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 disabled:from-gray-300 disabled:to-gray-400 text-white p-3 rounded-2xl transition-all shadow-lg hover:shadow-xl disabled:cursor-not-allowed"
-                  >
-                    <Send className="h-5 w-5" />
-                  </button>
-                </div>
-
-                {/* Powered by indicator */}
-                <div className="flex items-center justify-center mt-2 text-xs text-gray-500">
-                  <Zap className="h-3 w-3 mr-1" />
-                  <span>Powered by AI • Real-time Bus Data</span>
-                </div>
+              {/* Powered by indicator */}
+              <div className="flex items-center justify-center mt-2 text-xs text-gray-500">
+                <Zap className="h-3 w-3 mr-1" />
+                <span>Powered by AI • Real-time Bus Data</span>
               </div>
             </div>
           </div>
-        </>
+        </div>
       )}
     </>
   );
