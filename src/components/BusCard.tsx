@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Clock, MapPin, Route, ArrowRight, Users, Bus, Calendar, Star, Bookmark, Share2, Navigation, Zap, Heart, ChevronDown, ChevronUp } from 'lucide-react';
+import { Clock, MapPin, Route, ArrowRight, Users, Bus, Calendar, Star, Navigation, ChevronDown, ChevronUp } from 'lucide-react';
 import { BusSchedule } from '../types/BusSchedule';
 
 interface BusCardProps {
@@ -8,7 +8,6 @@ interface BusCardProps {
 
 const BusCard: React.FC<BusCardProps> = ({ schedule }) => {
   const [isExpanded, setIsExpanded] = useState(false);
-  const [isFavorited, setIsFavorited] = useState(false);
 
   const getDirectionColor = (direction: string) => {
     switch (direction) {
@@ -95,24 +94,6 @@ const BusCard: React.FC<BusCardProps> = ({ schedule }) => {
   return (
     <div className="group bg-white rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-100 overflow-hidden transform hover:-translate-y-1 relative">
       
-      {/* Quick Action Buttons */}
-      <div className="absolute top-4 right-4 z-10 flex space-x-2">
-        <button
-          onClick={() => setIsFavorited(!isFavorited)}
-          className={`p-2 rounded-full transition-all shadow-lg ${
-            isFavorited 
-              ? 'bg-red-500 text-white' 
-              : 'bg-white/90 text-gray-600 hover:bg-red-50 hover:text-red-500'
-          }`}
-        >
-          <Heart className={`h-4 w-4 ${isFavorited ? 'fill-current' : ''}`} />
-        </button>
-        
-        <button className="p-2 rounded-full bg-white/90 text-gray-600 hover:bg-blue-50 hover:text-blue-500 transition-all shadow-lg">
-          <Share2 className="h-4 w-4" />
-        </button>
-      </div>
-
       {/* Compact Header */}
       <div className="bg-gradient-to-r from-slate-50 to-gray-50 p-6 border-b border-gray-100">
         <div className="flex items-center justify-between">
