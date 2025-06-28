@@ -18,12 +18,13 @@ const Header: React.FC = () => {
 
           {/* Animated Bus Icon */}
       <div className="absolute top-20 right-10 opacity-10">
-        <div className="animate-pulse">
-          <Bus className="h-32 w-32 text-white transform rotate-12" />
+        <div className="animate-bus-drive">
+          <Bus className="h-32 w-32 text-white transform" />
         </div>
       </div>  
+      
       {/* Logo Section */}
-<div className="flex items-center justify-center space-x-4 mb-6">
+<div className="flex items-center justify-center space-x-4 mb-6 animate-fade-slide-up">
   <div className="relative">
     <div className="absolute inset-0 bg-blue-400 rounded-full blur-lg opacity-30"></div>
     <div className="relative bg-white/10 backdrop-blur-sm rounded-full p-4 border border-white/20">
@@ -46,20 +47,39 @@ const Header: React.FC = () => {
   </div>
 </div>
 
-{/* Title Section */}
+{/* Title Section with Multiple Animation Options */}
 <div className="space-y-4">
-  <h1 className="text-5xl md:text-6xl font-bold bg-gradient-to-r from-white via-blue-100 to-emerald-100 bg-clip-text text-transparent leading-tight animate-typewriter overflow-hidden whitespace-nowrap border-r-4 border-white w-fit mx-auto">
+  {/* Option 1: Fade Slide Up with Glow (RECOMMENDED) */}
+  <h1 className="text-5xl md:text-6xl font-bold bg-gradient-to-r from-white via-blue-100 to-emerald-100 bg-clip-text text-transparent leading-tight animate-fade-slide-up animate-glow-pulse">
     IIUC Bus Schedule 2025
   </h1>
 
-  <div className="flex items-center justify-center space-x-3 text-blue-200">
+  {/* Option 2: Bounce In Effect (Uncomment to use)
+  <h1 className="text-5xl md:text-6xl font-bold bg-gradient-to-r from-white via-blue-100 to-emerald-100 bg-clip-text text-transparent leading-tight animate-bounce-in">
+    IIUC Bus Schedule 2025
+  </h1>
+  */}
+
+  {/* Option 3: Shimmer Effect (Uncomment to use)
+  <h1 className="text-5xl md:text-6xl font-bold leading-tight animate-scale-in bg-gradient-to-r from-white via-blue-200 via-emerald-200 to-white bg-[length:200%_100%] bg-clip-text text-transparent animate-text-shimmer">
+    IIUC Bus Schedule 2025
+  </h1>
+  */}
+
+  {/* Option 4: Slide In Right (Uncomment to use)
+  <h1 className="text-5xl md:text-6xl font-bold bg-gradient-to-r from-white via-blue-100 to-emerald-100 bg-clip-text text-transparent leading-tight animate-slide-in-right">
+    IIUC Bus Schedule 2025
+  </h1>
+  */}
+
+  <div className="flex items-center justify-center space-x-3 text-blue-200 animate-fade-slide-up" style={{ animationDelay: '0.3s' }}>
     <div className="h-px bg-gradient-to-r from-transparent via-blue-300 to-transparent flex-1 max-w-20"></div>
     <p className="text-lg font-medium">International Islamic University Chittagong</p>
     <div className="h-px bg-gradient-to-r from-transparent via-blue-300 to-transparent flex-1 max-w-20"></div>
   </div>
 
   {/* Updated marquee text line */}
-  <div className="overflow-hidden w-full">
+  <div className="overflow-hidden w-full animate-fade-slide-up" style={{ animationDelay: '0.6s' }}>
     <p className="text-blue-100/80 text-lg whitespace-nowrap animate-marquee font-medium">
       Find your perfect bus schedule with our comprehensive search system. Filter by time, location, and preferences for a seamless commute experience.
     </p>
@@ -68,21 +88,21 @@ const Header: React.FC = () => {
 
           {/* Quick Stats */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-20">
-            <div className="bg-black/30 backdrop-blur-sm rounded-2xl p-6 border border-white/10">
+            <div className="bg-black/30 backdrop-blur-sm rounded-2xl p-6 border border-white/10 animate-fade-slide-up" style={{ animationDelay: '0.9s' }}>
               <div className="flex items-center justify-center space-x-3 mb-2">
                 <Clock className="h-6 w-6 text-blue-300" />
                 <span className="text-2xl font-bold text-white">50+</span>
               </div>
               <p className="text-blue-200 text-sm">Daily Schedules</p>
             </div>
-            <div className="bg-black/30 backdrop-blur-sm rounded-2xl p-6 border border-white/10">
+            <div className="bg-black/30 backdrop-blur-sm rounded-2xl p-6 border border-white/10 animate-fade-slide-up" style={{ animationDelay: '1.1s' }}>
               <div className="flex items-center justify-center space-x-3 mb-2">
                 <Bus className="h-6 w-6 text-emerald-300" />
                 <span className="text-2xl font-bold text-white">15+</span>
               </div>
               <p className="text-blue-200 text-sm">Routes Available</p>
             </div>
-            <div className="bg-black/30 backdrop-blur-sm rounded-2xl p-6 border border-white/10">
+            <div className="bg-black/30 backdrop-blur-sm rounded-2xl p-6 border border-white/10 animate-fade-slide-up" style={{ animationDelay: '1.3s' }}>
               <div className="flex items-center justify-center space-x-3 mb-2">
                 <GraduationCap className="h-6 w-6 text-purple-300" />
                 <span className="text-2xl font-bold text-white">24/7</span>
