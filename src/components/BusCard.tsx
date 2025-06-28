@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Clock, MapPin, Route, ArrowRight, Users, Bus, Calendar, Star, Bookmark, Share2, Navigation, Zap, Leaf, Heart, ChevronDown, ChevronUp } from 'lucide-react';
+import { Clock, MapPin, Route, ArrowRight, Users, Bus, Calendar, Star, Bookmark, Share2, Navigation, Zap, Heart, ChevronDown, ChevronUp } from 'lucide-react';
 import { BusSchedule } from '../types/BusSchedule';
 
 interface BusCardProps {
@@ -92,26 +92,11 @@ const BusCard: React.FC<BusCardProps> = ({ schedule }) => {
     return `${Math.max(15, routeLength * 8)} min`;
   };
 
-  // Check if it's an eco-friendly option
-  const isEcoFriendly = () => {
-    return schedule.busType?.includes('AC') || schedule.scheduleType === 'Regular';
-  };
-
   return (
     <div className="group bg-white rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-100 overflow-hidden transform hover:-translate-y-1 relative">
       
-      {/* Eco-Friendly Badge */}
-      {isEcoFriendly() && (
-        <div className="absolute top-4 right-4 z-10">
-          <div className="bg-green-500 text-white px-3 py-1 rounded-full text-xs font-bold flex items-center space-x-1 shadow-lg">
-            <Leaf className="h-3 w-3" />
-            <span>Eco</span>
-          </div>
-        </div>
-      )}
-
       {/* Quick Action Buttons */}
-      <div className="absolute top-4 left-4 z-10 flex space-x-2">
+      <div className="absolute top-4 right-4 z-10 flex space-x-2">
         <button
           onClick={() => setIsFavorited(!isFavorited)}
           className={`p-2 rounded-full transition-all shadow-lg ${
@@ -240,12 +225,6 @@ const BusCard: React.FC<BusCardProps> = ({ schedule }) => {
               <Bus className="h-4 w-4" />
               <span>Live tracking</span>
             </div>
-            {isEcoFriendly() && (
-              <div className="flex items-center space-x-2 text-sm text-green-600">
-                <Leaf className="h-4 w-4" />
-                <span>Eco-friendly</span>
-              </div>
-            )}
           </div>
           
           <div className="flex items-center space-x-2">
