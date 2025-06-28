@@ -1,22 +1,4 @@
-/*
-  # Create users table for IIUC Bus System
-
-  1. New Tables
-    - `users`
-      - `id` (uuid, primary key) - matches Supabase auth.users.id
-      - `email` (text, unique) - user's email address
-      - `name` (text) - full name
-      - `university_id` (text, unique) - student/employee ID
-      - `mobile` (text) - mobile phone number
-      - `gender` (text) - Male or Female
-      - `role` (text) - student, teacher, or admin
-      - `created_at` (timestamp)
-
-  2. Security
-    - Enable RLS on `users` table
-    - Add policies for users to read their own data
-    - Add policies for admin to manage all users
-*/
+-- 1. Create `users` table for IIUC Bus System
 
 CREATE TABLE IF NOT EXISTS users (
   id uuid PRIMARY KEY REFERENCES auth.users(id) ON DELETE CASCADE,
@@ -29,24 +11,33 @@ CREATE TABLE IF NOT EXISTS users (
   created_at timestamptz DEFAULT now()
 );
 
--- Enable Row Level Security
+-- 2. Enable Row-Level Security (RLS)
 ALTER TABLE users ENABLE ROW LEVEL SECURITY;
 
--- Policy: Users can read their own data
+-- 3. RLS Policies
+
+-- 3.1 INSERT: Users can insert their own data
+CREATE POLICY "Users can insert own data"
+  ON users
+  FOR INSERT
+  TO authenticated
+  WITH CHECK (auth.uid() = id);
+
+-- 3.2 SELECT: Users can read their own data
 CREATE POLICY "Users can read own data"
   ON users
   FOR SELECT
   TO authenticated
   USING (auth.uid() = id);
 
--- Policy: Users can update their own data
+-- 3.3 UPDATE: Users can update their own data
 CREATE POLICY "Users can update own data"
   ON users
   FOR UPDATE
   TO authenticated
   USING (auth.uid() = id);
 
--- Policy: Admin can read all users
+-- 3.4 SELECT: Admin can read all users
 CREATE POLICY "Admin can read all users"
   ON users
   FOR SELECT
@@ -58,7 +49,7 @@ CREATE POLICY "Admin can read all users"
     )
   );
 
--- Policy: Admin can update all users
+-- 3.5 UPDATE: Admin can update all users
 CREATE POLICY "Admin can update all users"
   ON users
   FOR UPDATE
@@ -70,7 +61,7 @@ CREATE POLICY "Admin can update all users"
     )
   );
 
--- Policy: Admin can delete users
+-- 3.6 DELETE: Admin can delete users
 CREATE POLICY "Admin can delete users"
   ON users
   FOR DELETE
@@ -82,7 +73,7 @@ CREATE POLICY "Admin can delete users"
     )
   );
 
--- Create indexes for better performance
+-- 4. Indexes for performance
 CREATE INDEX IF NOT EXISTS idx_users_university_id ON users(university_id);
 CREATE INDEX IF NOT EXISTS idx_users_role ON users(role);
 CREATE INDEX IF NOT EXISTS idx_users_email ON users(email);
