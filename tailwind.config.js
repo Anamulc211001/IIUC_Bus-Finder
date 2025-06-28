@@ -36,6 +36,19 @@ export default {
         'hologram': 'hologram 2.5s ease-in-out infinite',
         'cyber-scan': 'cyberScan 3s ease-in-out infinite',
         'magnetic-pull': 'magneticPull 1.8s ease-out forwards',
+
+        // 🚀 ROCKET ANIMATIONS
+        'rocket-launch': 'rocketLaunch 1.5s ease-out forwards',
+        'rocket-hover': 'rocketHover 0.6s ease-in-out infinite',
+        'fire-flicker': 'fireFlicker 0.3s ease-in-out infinite',
+        'fire-flicker-left': 'fireFlickerLeft 0.4s ease-in-out infinite',
+        'fire-flicker-right': 'fireFlickerRight 0.35s ease-in-out infinite',
+        'spark-1': 'spark1 0.8s ease-out infinite',
+        'spark-2': 'spark2 1s ease-out infinite',
+        'spark-3': 'spark3 0.9s ease-out infinite',
+        'spark-4': 'spark4 1.1s ease-out infinite',
+        'spark-5': 'spark5 0.7s ease-out infinite',
+        'trail-fade': 'trailFade 1.5s ease-out forwards',
       },
       keyframes: {
         // Original keyframes
@@ -331,6 +344,175 @@ export default {
           '100%': { 
             opacity: '1',
             transform: 'translateY(0) scale(1) rotateX(0deg)'
+          },
+        },
+
+        // 🚀 ROCKET KEYFRAMES
+        rocketLaunch: {
+          '0%': { 
+            transform: 'translateY(0) scale(1) rotate(0deg)',
+            filter: 'brightness(1)'
+          },
+          '20%': { 
+            transform: 'translateY(-5px) scale(1.1) rotate(-5deg)',
+            filter: 'brightness(1.2)'
+          },
+          '40%': { 
+            transform: 'translateY(-15px) scale(1.15) rotate(5deg)',
+            filter: 'brightness(1.4)'
+          },
+          '60%': { 
+            transform: 'translateY(-30px) scale(1.2) rotate(-3deg)',
+            filter: 'brightness(1.6)'
+          },
+          '80%': { 
+            transform: 'translateY(-50px) scale(1.1) rotate(2deg)',
+            filter: 'brightness(1.3)'
+          },
+          '100%': { 
+            transform: 'translateY(-80px) scale(0.8) rotate(0deg)',
+            filter: 'brightness(1)',
+            opacity: '0.3'
+          },
+        },
+        rocketHover: {
+          '0%, 100%': { 
+            transform: 'translateY(0px) rotate(0deg)',
+            filter: 'brightness(1)'
+          },
+          '50%': { 
+            transform: 'translateY(-3px) rotate(5deg)',
+            filter: 'brightness(1.1)'
+          },
+        },
+        fireFlicker: {
+          '0%, 100%': { 
+            transform: 'scaleY(1) scaleX(1)',
+            opacity: '1'
+          },
+          '25%': { 
+            transform: 'scaleY(1.2) scaleX(0.9)',
+            opacity: '0.9'
+          },
+          '50%': { 
+            transform: 'scaleY(0.8) scaleX(1.1)',
+            opacity: '1'
+          },
+          '75%': { 
+            transform: 'scaleY(1.1) scaleX(0.95)',
+            opacity: '0.95'
+          },
+        },
+        fireFlickerLeft: {
+          '0%, 100%': { 
+            transform: 'scaleY(1) scaleX(1) translateX(0)',
+            opacity: '0.8'
+          },
+          '33%': { 
+            transform: 'scaleY(1.3) scaleX(0.8) translateX(-1px)',
+            opacity: '0.9'
+          },
+          '66%': { 
+            transform: 'scaleY(0.7) scaleX(1.2) translateX(1px)',
+            opacity: '0.7'
+          },
+        },
+        fireFlickerRight: {
+          '0%, 100%': { 
+            transform: 'scaleY(1) scaleX(1) translateX(0)',
+            opacity: '0.8'
+          },
+          '30%': { 
+            transform: 'scaleY(0.9) scaleX(1.1) translateX(1px)',
+            opacity: '0.9'
+          },
+          '70%': { 
+            transform: 'scaleY(1.2) scaleX(0.9) translateX(-1px)',
+            opacity: '0.75'
+          },
+        },
+        spark1: {
+          '0%': { 
+            transform: 'translateY(0) translateX(0) scale(1)',
+            opacity: '1'
+          },
+          '50%': { 
+            transform: 'translateY(-8px) translateX(-2px) scale(0.8)',
+            opacity: '0.8'
+          },
+          '100%': { 
+            transform: 'translateY(-16px) translateX(-4px) scale(0.3)',
+            opacity: '0'
+          },
+        },
+        spark2: {
+          '0%': { 
+            transform: 'translateY(0) translateX(0) scale(1)',
+            opacity: '1'
+          },
+          '50%': { 
+            transform: 'translateY(-6px) translateX(3px) scale(0.7)',
+            opacity: '0.7'
+          },
+          '100%': { 
+            transform: 'translateY(-12px) translateX(6px) scale(0.2)',
+            opacity: '0'
+          },
+        },
+        spark3: {
+          '0%': { 
+            transform: 'translateY(0) translateX(0) scale(1)',
+            opacity: '1'
+          },
+          '50%': { 
+            transform: 'translateY(-10px) translateX(1px) scale(0.6)',
+            opacity: '0.9'
+          },
+          '100%': { 
+            transform: 'translateY(-20px) translateX(2px) scale(0.1)',
+            opacity: '0'
+          },
+        },
+        spark4: {
+          '0%': { 
+            transform: 'translateY(0) translateX(0) scale(1)',
+            opacity: '1'
+          },
+          '50%': { 
+            transform: 'translateY(-7px) translateX(-3px) scale(0.9)',
+            opacity: '0.6'
+          },
+          '100%': { 
+            transform: 'translateY(-14px) translateX(-6px) scale(0.4)',
+            opacity: '0'
+          },
+        },
+        spark5: {
+          '0%': { 
+            transform: 'translateY(0) translateX(0) scale(1)',
+            opacity: '1'
+          },
+          '50%': { 
+            transform: 'translateY(-9px) translateX(2px) scale(0.5)',
+            opacity: '0.8'
+          },
+          '100%': { 
+            transform: 'translateY(-18px) translateX(4px) scale(0.2)',
+            opacity: '0'
+          },
+        },
+        trailFade: {
+          '0%': { 
+            opacity: '1',
+            transform: 'scaleY(1)'
+          },
+          '50%': { 
+            opacity: '0.8',
+            transform: 'scaleY(1.2)'
+          },
+          '100%': { 
+            opacity: '0',
+            transform: 'scaleY(0.5)'
           },
         },
       },
