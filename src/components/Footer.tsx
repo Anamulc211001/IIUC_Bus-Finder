@@ -168,10 +168,10 @@ const Footer: React.FC = () => {
           </div>
         </div>
 
-        {/* Simplified Bottom Section */}
+        {/* Enhanced Bottom Section with Developer Contact */}
         <div className="border-t border-gray-800 pt-8">
-          <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
-            <div className="text-center md:text-left">
+          <div className="flex flex-col lg:flex-row justify-between items-center space-y-6 lg:space-y-0">
+            <div className="text-center lg:text-left">
               <p className="text-gray-400 text-sm">
                 © 2025 IIUC Bus Finder. All rights reserved.
               </p>
@@ -184,36 +184,66 @@ const Footer: React.FC = () => {
               </p>
             </div>
             
-            {/* Simplified Developer Credit */}
-            <div className="flex flex-wrap items-center justify-center gap-2 bg-gradient-to-r from-blue-500/10 to-purple-500/10 rounded-xl px-4 py-2 border border-blue-500/20">
-              <span className="text-gray-300 text-sm">Developed by</span>
-              <span className="text-white font-semibold text-sm">Md Anamul Haque</span>
+            {/* Enhanced Developer Contact Section */}
+            <div className="bg-gradient-to-r from-blue-500/10 to-purple-500/10 rounded-2xl px-6 py-4 border border-blue-500/20">
+              <div className="text-center lg:text-left mb-3">
+                <span className="text-gray-300 text-sm">Developed by</span>
+                <span className="text-white font-semibold text-sm ml-2">Md Anamul Haque</span>
+              </div>
               
-              <div className="flex items-center space-x-2 ml-2">
+              {/* Developer Contact Info */}
+              <div className="flex flex-wrap items-center justify-center lg:justify-start gap-4">
+                {/* Phone */}
+                <a
+                  href="tel:+8801680478706"
+                  className="flex items-center space-x-2 text-green-300 hover:text-green-400 transition-colors group"
+                >
+                  <div className="bg-green-500/20 rounded-lg p-1 group-hover:bg-green-500/30 transition-colors">
+                    <Phone className="h-3 w-3" />
+                  </div>
+                  <span className="text-xs font-medium">+880 1680-478706</span>
+                </a>
+                
+                {/* Email */}
                 <a
                   href="mailto:anamulshakib6450@gmail.com"
-                  className="text-blue-300 hover:text-blue-400 transition text-xs underline"
+                  className="flex items-center space-x-2 text-blue-300 hover:text-blue-400 transition-colors group"
                 >
-                  Email
+                  <div className="bg-blue-500/20 rounded-lg p-1 group-hover:bg-blue-500/30 transition-colors">
+                    <Mail className="h-3 w-3" />
+                  </div>
+                  <span className="text-xs font-medium">Email</span>
                 </a>
-                <span className="text-gray-500">•</span>
-                <a
-                  href="https://github.com/Anamulc211001"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-blue-300 hover:text-blue-400 transition text-xs underline"
-                >
-                  GitHub
-                </a>
-                <span className="text-gray-500">•</span>
-                <a
-                  href="https://www.linkedin.com/in/md-anamul-haque-shakib/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-blue-300 hover:text-blue-400 transition text-xs underline"
-                >
-                  LinkedIn
-                </a>
+                
+                {/* Social Links */}
+                <div className="flex items-center space-x-3">
+                  <a
+                    href="https://github.com/Anamulc211001"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-gray-300 hover:text-white transition text-xs underline"
+                  >
+                    GitHub
+                  </a>
+                  <span className="text-gray-500">•</span>
+                  <a
+                    href="https://www.linkedin.com/in/md-anamul-haque-shakib/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-gray-300 hover:text-white transition text-xs underline"
+                  >
+                    LinkedIn
+                  </a>
+                  <span className="text-gray-500">•</span>
+                  <a
+                    href="https://www.behance.net/mdanamulhaque6"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-gray-300 hover:text-white transition text-xs underline"
+                  >
+                    Behance
+                  </a>
+                </div>
               </div>
             </div>
           </div>
