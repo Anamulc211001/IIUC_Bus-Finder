@@ -19,6 +19,9 @@ function App() {
     setBusType,
     scheduleType,
     setScheduleType,
+    routeFilter,
+    setRouteFilter,
+    routeAreas,
     filteredSchedules,
     isSearching,
   } = useSearch(busSchedules);
@@ -44,6 +47,9 @@ function App() {
             onBusTypeChange={setBusType}
             scheduleType={scheduleType}
             onScheduleTypeChange={setScheduleType}
+            routeFilter={routeFilter}
+            onRouteFilterChange={setRouteFilter}
+            routeAreas={routeAreas}
           />
         </div>
         

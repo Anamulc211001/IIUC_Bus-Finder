@@ -16,3 +16,4 @@ export type Direction = 'CityToIIUC' | 'IIUCToCity' | 'ToUniversity' | 'FromUniv
 export type Gender = 'Male' | 'Female' | 'All';
 export type BusType = 'IIUC Bus' | 'IIUC A&H B' | 'AC Bus' | 'Non-AC Bus' | 'All';
 export type ScheduleType = 'Regular' | 'Friday' | 'All';
+export type RouteFilter = string;

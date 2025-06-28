@@ -1,6 +1,6 @@
 import React from 'react';
-import { Search, Filter, Bus, Users, Calendar, MapPin } from 'lucide-react';
-import { Direction, Gender, BusType, ScheduleType } from '../types/BusSchedule';
+import { Search, Filter, Bus, Users, Calendar, MapPin, Route } from 'lucide-react';
+import { Direction, Gender, BusType, ScheduleType, RouteFilter } from '../types/BusSchedule';
 
 interface SearchFiltersProps {
   searchTerm: string;
@@ -13,6 +13,9 @@ interface SearchFiltersProps {
   onBusTypeChange: (busType: BusType) => void;
   scheduleType: ScheduleType;
   onScheduleTypeChange: (scheduleType: ScheduleType) => void;
+  routeFilter: RouteFilter;
+  onRouteFilterChange: (routeFilter: RouteFilter) => void;
+  routeAreas: string[];
 }
 
 const SearchFilters: React.FC<SearchFiltersProps> = ({
@@ -26,7 +29,22 @@ const SearchFilters: React.FC<SearchFiltersProps> = ({
   onBusTypeChange,
   scheduleType,
   onScheduleTypeChange,
+  routeFilter,
+  onRouteFilterChange,
+  routeAreas,
 }) => {
+  const clearAllFilters = () => {
+    onSearchChange('');
+    onDirectionChange('All');
+    onGenderChange('All');
+    onBusTypeChange('All');
+    onScheduleTypeChange('All');
+    onRouteFilterChange('All');
+  };
+
+  const hasActiveFilters = searchTerm !== '' || direction !== 'All' || gender !== 'All' || 
+                          busType !== 'All' || scheduleType !== 'All' || routeFilter !== 'All';
+
   return (
     <div className="bg-white/80 backdrop-blur-sm rounded-3xl shadow-xl border border-gray-200/50 p-8 mb-12 -mt-16 relative z-10">
 
@@ -41,9 +59,19 @@ const SearchFilters: React.FC<SearchFiltersProps> = ({
             <p className="text-gray-600">Find your perfect bus schedule</p>
           </div>
         </div>
-        <div className="hidden md:flex items-center space-x-2 text-sm text-gray-500">
-          <MapPin className="h-4 w-4" />
-          <span>Real-time schedules</span>
+        <div className="flex items-center space-x-4">
+          <div className="hidden md:flex items-center space-x-2 text-sm text-gray-500">
+            <MapPin className="h-4 w-4" />
+            <span>Real-time schedules</span>
+          </div>
+          {hasActiveFilters && (
+            <button
+              onClick={clearAllFilters}
+              className="px-4 py-2 bg-red-50 text-red-600 rounded-xl font-medium hover:bg-red-100 transition-colors border border-red-200"
+            >
+              Clear All
+            </button>
+          )}
         </div>
       </div>
       
@@ -67,7 +95,32 @@ const SearchFilters: React.FC<SearchFiltersProps> = ({
       </div>
 
       {/* Filter Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
+        {/* Route/Area Filter - NEW */}
+        <div className="space-y-3">
+          <label className="block text-sm font-semibold text-gray-700">
+            Route/Area
+          </label>
+          <div className="relative group">
+            <Route className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400 group-focus-within:text-blue-500 transition-colors" />
+            <select
+              value={routeFilter}
+              onChange={(e) => onRouteFilterChange(e.target.value as RouteFilter)}
+              className="w-full pl-12 pr-10 py-4 bg-gray-50 border-2 border-gray-200 rounded-2xl focus:ring-4 focus:ring-blue-500/20 focus:border-blue-500 transition-all duration-200 text-gray-900 appearance-none cursor-pointer hover:bg-gray-100"
+            >
+              <option value="All">All Areas</option>
+              {routeAreas.map((area) => (
+                <option key={area} value={area}>{area}</option>
+              ))}
+            </select>
+            <div className="absolute inset-y-0 right-0 flex items-center pr-4 pointer-events-none">
+              <svg className="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+              </svg>
+            </div>
+          </div>
+        </div>
+
         {/* Schedule Type Filter */}
         <div className="space-y-3">
           <label className="block text-sm font-semibold text-gray-700">
@@ -171,13 +224,23 @@ const SearchFilters: React.FC<SearchFiltersProps> = ({
       </div>
 
       {/* Filter Info */}
-      {scheduleType !== 'Friday' && (
-        <div className="mt-6 p-4 bg-blue-50 rounded-2xl border border-blue-200">
-          <p className="text-sm text-blue-700">
-            <span className="font-semibold">Note:</span> Bus Type filter is only available for Friday schedules.
-          </p>
-        </div>
-      )}
+      <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4">
+        {scheduleType !== 'Friday' && (
+          <div className="p-4 bg-blue-50 rounded-2xl border border-blue-200">
+            <p className="text-sm text-blue-700">
+              <span className="font-semibold">Note:</span> Bus Type filter is only available for Friday schedules.
+            </p>
+          </div>
+        )}
+        
+        {routeFilter !== 'All' && (
+          <div className="p-4 bg-green-50 rounded-2xl border border-green-200">
+            <p className="text-sm text-green-700">
+              <span className="font-semibold">Route Filter Active:</span> Showing schedules for "{routeFilter}" area.
+            </p>
+          </div>
+        )}
+      </div>
     </div>
   );
 };
