@@ -4,13 +4,11 @@ import { Bus, GraduationCap, Clock } from 'lucide-react';
 const Header: React.FC = () => {
   return (
 <header
-  className="relative bg-cover bg-center bg-no-repeat text-white overflow-hidden h-[700px]"
-  style={{ backgroundImage: "url('/bg-iiuc3.png')" }} // 🔁 Change this to your actual image path
+  className="relative bg-cover bg-center bg-no-repeat text-white overflow-hidden h-[700px] pt-20"
+  style={{ backgroundImage: "url('/bg-iiuc3.png')" }}
 >
   {/* Optional: Overlay for readability */}
 <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/30 to-transparent z-0"></div>
-
-
 
   {/* Background Pattern on top of image (optional) */}
   <div className="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width=%2260%22 height=%2260%22 viewBox=%220 0 60 60%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cg fill=%22none%22 fill-rule=%22evenodd%22%3E%3Cg fill=%22%23ffffff%22 fill-opacity=%220.03%22%3E%3Ccircle cx=%2230%22 cy=%2230%22 r=%222%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')] opacity-10 z-0"></div>
@@ -48,11 +46,6 @@ const Header: React.FC = () => {
   </div>
 </div>
 
-
-
-          
-
-
 {/* Title Section */}
 <div className="space-y-4">
   <h1 className="text-5xl md:text-6xl font-bold bg-gradient-to-r from-white via-blue-100 to-emerald-100 bg-clip-text text-transparent leading-tight animate-typewriter overflow-hidden whitespace-nowrap border-r-4 border-white w-fit mx-auto">
@@ -72,7 +65,6 @@ const Header: React.FC = () => {
     </p>
   </div>
 </div>
-
 
           {/* Quick Stats */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-20">
@@ -100,8 +92,6 @@ const Header: React.FC = () => {
           </div>
         </div>
       </div>
-      
-
       
       {/* Bottom Wave */}
       <div className="absolute bottom-0 left-0 right-0">
